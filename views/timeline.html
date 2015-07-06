@@ -1,0 +1,21 @@
+<div>
+    <div>
+        <div>
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>Time Range</b></div>
+				<form>
+					<label>Initial Time </label><input class="form-control" type="text" ng-model="formcontent.InitialTime" placeholder="YYYY-MM-DD hh:mm:ss" size="21">
+					<label>Final Time </label><input class="form-control" type="text" ng-model="formcontent.FinalTime" placeholder="YYYY-MM-DD hh:mm:ss" size="21">
+					<select class="form-control" ng-model="formcontent.req" style="width: 300px">
+						<option ng-repeat="request in requests" value="{{request.label}}">{{request.label}}</option>
+					</select>
+					<input type="button" value="Submit" ng-click="graphTL()">
+				</form>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>Timeline graph</b></div>
+				<div id="chartContainer" style="height: 500px; width: 100%;"></div>
+			</div>
+		</div>
+    </div>
+</div>

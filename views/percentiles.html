@@ -1,0 +1,46 @@
+<div>
+    <div>
+        <div style="width: 70%; float: left;">
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>Percentiles Graph</b></div>
+				<div id="chartContainer" style="height: 500px; width: 100%;"></div>
+			</div>
+		</div>
+		<div style="width: 30%; float: left;">
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>Percentiles Data All Requests</b></div>
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>Percentil</th>
+							<th>Response time in ms</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="data in dataGraph.data[0].dataPoints">
+							<td>{{data.label}}</td>
+							<td>{{data.y}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>Percentiles Data Successful Requests</b></div>
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>Percentil</th>
+							<th>Response time in ms</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="data in dataGraph.data[1].dataPoints">
+							<td>{{data.label}}</td>
+						<td>{{data.y}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+    </div>
+</div>

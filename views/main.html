@@ -1,0 +1,35 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<h2>Hello hello!!!</h2>
+			
+			<div ng-switch on="test.testname">
+				<div ng-switch-when="">
+					<p>Please select a execution</p>
+				</div>
+				<div ng-switch-default>
+					<p>The selected execution is: {{test.testname}}</p>
+				</div>
+			</div>
+			
+			<form>
+				<div class="form-group">
+					<label>Select the execution you want to analyze</label>
+					<select ng-model="testname" class="form-control">
+						<option ng-repeat="execution in executions" value="{{execution.name}}">{{execution.name}}</option>
+					</select>
+				</div>
+				<button type="submit" class="btn btn-default" ng-click="setexecution()">Set</button>
+			</form>
+			<br>
+			<h3>Or Create new execution...</h3>
+			<form>
+				<div class="form-group">
+					<label>Execution</label>
+					<input type="text" ng-model="newtest" class="form-control" />
+				</div>
+				<button type="submit" class="btn btn-default" ng-click="createexecution()">Create</button>
+			</form>
+		</div>
+	</div>
+</div>

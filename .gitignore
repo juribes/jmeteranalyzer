@@ -41,3 +41,9 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+# =======================
+# added by Juan Camilo
+nbproject
+.buildignore
+services\configuracion.php
+DOC

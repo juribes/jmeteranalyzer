@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12" >
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>General Info</b></div>
+				<table class="table table-striped table-bordered table-hover">
+					<tbody>
+						<tr><td style="text-align: right; width: 50%">Started at:</td><td>{{info.starttime}}</td></tr>
+						<tr><td style="text-align: right; width: 50%">Finished at:</td><td>{{info.finishtime}}</td></tr>
+						<tr><td style="text-align: right; width: 50%">Test Duration:</td><td>{{info.duration}}</td></tr>
+						<tr><td style="text-align: right; width: 50%">Transactions Count:</td><td>{{info.transcount}}</td></tr>
+						<tr><td style="text-align: right; width: 50%">Minimum Response Time, ms:</td><td>{{info.minrt}}</td></tr>
+						<tr><td style="text-align: right; width: 50%">Average Response Time, ms:</td><td>{{info.avgrt}}</td></tr>
+						<tr><td style="text-align: right; width: 50%">Maximum Response Time, ms:</td><td>{{info.maxrt}}</td></tr>
+						<tr><td style="text-align: right; width: 50%">Average Throughput (TPS):</td><td>{{info.avgtps}}</td></tr>
+						<tr><td style="text-align: right; width: 50%">Maximum Throughput (TPS):</td><td>{{info.maxtps}}</td></tr>
+					</tbody>
+				</table>
+				<br>
+			</div>
+			<div class="panel panel-default">				
+				<div class="panel-heading"><b>Response codes</b></div>
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr><th>Code</th><th>Count</th></tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="errortype in info.error | orderBy:code">
+							<td style="text-align: right; width: 60%" >{{errortype.responseCode}}</td><td>{{errortype.count}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+    </div>
+</div>

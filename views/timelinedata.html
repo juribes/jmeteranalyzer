@@ -1,0 +1,40 @@
+<div>
+    <div>
+        <div>
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>Time Range</b></div>
+				<form>
+					<label>Initial Time </label><input class="form-control" type="text" ng-model="formcontent.InitialTime" placeholder="YYYY-MM-DD hh:mm:ss" size="21">
+					<label>Final Time </label><input class="form-control" type="text" ng-model="formcontent.FinalTime" placeholder="YYYY-MM-DD hh:mm:ss" size="21">
+					<select class="form-control" ng-model="formcontent.req" style="width: 300px">
+						<option ng-repeat="request in requests" value="{{request.label}}">{{request.label}}</option>
+					</select>
+					
+					<input type="button" value="Submit" ng-click="timelinetable()">
+				</form>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>Timeline data report</b></div>
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th ng-click="sort('label')"><span class="{{iconT}}" aria-hidden="true"></span>Request</th>
+							<th ng-click="sort('Date')"><span class="{{iconM}}" aria-hidden="true"></span>Time</th>
+							<th ng-click="sort('AVG')"><span class="{{iconM}}" aria-hidden="true"></span>AVG</th>
+							<th ng-click="sort('MAX')"><span class="{{iconM}}" aria-hidden="true"></span>TPS</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr ng-repeat="data in dataset | orderBy:'time'">
+							<td style="width: 50%">{{data.label}}</td>
+							<td>{{data.time}}</td>
+							<td>{{data.AVG}}</td>
+							<td>{{data.TPS}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+    </div>
+</div>

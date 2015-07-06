@@ -1,0 +1,96 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title>jMeterlyzer</title>
+    <meta name="description" content="App to process JMeter results">
+    <meta name="viewport" content="width=device-width">
+	
+
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
+
+    <link rel="stylesheet" href="styles/main.css">
+
+  </head>
+  <body ng-app="jMeterlyser">
+
+    <!-- Add your site or application content here -->
+    <div class="header" ng-controller="navbarCtrl">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+
+            <a class="navbar-brand" href="#/">jMeterlyzer</a>
+          </div>
+			<div ng-switch on="test.testname">
+				<div ng-switch-when="">
+					<p>Please select a execution</p>
+				</div>
+				<div ng-switch-default>
+					<p>The selected execution is: {{test.testname}}</p>
+				</div>
+			</div>
+          <div class="collapse navbar-collapse" id="js-navbar-collapse">
+
+            <ul class="nav navbar-nav">
+              <li ng-class="{active: location.locURL == '/'}"><a href="#/">Home</a></li>
+              <li ng-class="{active: location.locURL == '/general_info'}"><a ng-href="#/general_info">General Info</a></li>
+			  <li ng-class="{active: location.locURL == '/summary'}"><a ng-href="#/summary">Summary</a></li>
+              <li ng-class="{active: location.locURL == '/timelineData'}"><a ng-href="#/timelineData">Timeline Data</a></li>
+              <li ng-class="{active: location.locURL == '/timeline'}"><a ng-href="#/timeline">Timeline</a></li>
+			  <li ng-class="{active: location.locURL == '/percentiles'}"><a ng-href="#/percentiles">Percentiles</a></li>
+			  <li ng-class="{active: location.locURL == '/upload'}"><a ng-href="#/upload">Upload</a></li>
+            </ul>
+          </div>
+		  
+        </div>
+      </div>
+    </div>
+
+    <div>
+    <div ng-view=""></div>
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        <p>jMeterlyser by Juan Camilo Uribe Sanin</p>
+      </div>
+    </div>
+
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="lib/angular-animate/angular-animate.js"></script>
+    <script src="lib/angular-cookies/angular-cookies.js"></script>
+    <script src="lib/angular-resource/angular-resource.js"></script>
+    <script src="lib/angular-route/angular-route.js"></script>
+    <script src="lib/angular-sanitize/angular-sanitize.js"></script>
+    <script src="lib/angular-touch/angular-touch.js"></script>
+ 	<script src="lib/canvasjs/canvasjs.min.js"></script>
+	<script src="lib/angular-file-upload/angular-file-upload.js"></script>
+	<script src="lib/console-sham/console-sham.js"></script>
+	
+	
+    
+<!-- Controllers --> 	
+  	<script src="scripts/app.js"></script>
+  	<script src="scripts/controllers/navbarCtrl.js"></script>
+  	<script src="scripts/controllers/mainCtrl.js"></script>
+	<script src="scripts/controllers/summaryCtrl.js"></script>
+	<script src="scripts/controllers/timelineCtrl.js"></script>
+	<script src="scripts/controllers/timelinedataCtrl.js"></script>
+	<script src="scripts/controllers/generalinfoCtrl.js"></script>
+	<script src="scripts/controllers/percentilesCtrl.js"></script>
+	<script src="scripts/controllers/uploadCtrl.js"></script>
+    <script src="scripts/services/services.js"></script>
+	<script src="scripts/factory/factory.js"></script>
+	
+  </body>
+</html>

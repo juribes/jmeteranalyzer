@@ -1,0 +1,39 @@
+<div>
+    <div>
+        <div>
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>Time Range</b></div>
+				<form>
+					<label>Initial Time </label><input class="form-control" type="text" ng-model="formcontent.InitialTime" placeholder="YYYY-MM-DD hh:mm:ss" size="21">
+					<label>Final Time </label><input class="form-control" type="text" ng-model="formcontent.FinalTime" placeholder="YYYY-MM-DD hh:mm:ss" size="21"><input type="button" value="Submit" ng-click="summarytable()">
+				</form>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading"><b>Summary report</b></div>
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<tr>
+							<th ng-click="sort('Request')"><span class="{{iconT}}" aria-hidden="true"></span>Request</th>
+							<th ng-click="sort('Samples')"><span class="{{iconM}}" aria-hidden="true"></span>Samples</th>
+							<th ng-click="sort('AVG')"><span class="{{iconM}}" aria-hidden="true"></span>AVG</th>
+							<th ng-click="sort('MAX')"><span class="{{iconM}}" aria-hidden="true"></span>MAX</th>
+							<th ng-click="sort('MIN')"><span class="{{iconM}}" aria-hidden="true"></span>MIN</th>
+							<th ng-click="sort('StdDev')"><span class="{{iconM}}" aria-hidden="true"></span>Std.Dev.</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<tr ng-repeat="data in dataset | orderBy:orden">
+							<td style="width: 50%">{{data.label}}</td>
+							<td>{{data.Samples}}</td>
+							<td>{{data.AVG}}</td>
+							<td>{{data.MAX}}</td>
+							<td>{{data.MIN}}</td>
+							<td>{{data.StdDev}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+    </div>
+</div>
