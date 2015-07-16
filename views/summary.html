@@ -3,9 +3,12 @@
         <div>
 			<div class="panel panel-default">
 				<div class="panel-heading"><b>Time Range</b></div>
-				<form>
-					<label>Initial Time </label><input class="form-control" type="text" ng-model="formcontent.InitialTime" placeholder="YYYY-MM-DD hh:mm:ss" size="21">
-					<label>Final Time </label><input class="form-control" type="text" ng-model="formcontent.FinalTime" placeholder="YYYY-MM-DD hh:mm:ss" size="21"><input type="button" value="Submit" ng-click="summarytable()">
+				<form class="form-inline">
+					<label>Initial Time </label>
+					<input class="form-control" type="text" ng-model="formcontent.InitialTime" placeholder="YYYY-MM-DD hh:mm:ss" size="21">
+					<label>Final Time </label>
+					<input class="form-control" type="text" ng-model="formcontent.FinalTime" placeholder="YYYY-MM-DD hh:mm:ss" size="21">
+					<button type="submit" class="btn btn-default" ng-click="summarytable()">Submit</button>
 				</form>
 			</div>
 			<div class="panel panel-default">
