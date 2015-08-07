@@ -10,8 +10,9 @@
 	$dataPointsAllvec 	= array();
 	$dataPoints200vec	= array();
 
-	
+	ob_start();
 	$enlace = mysqli_connect($db_host, $db_user, $db_password, $db_database);
+	ob_end_clean();
 
 	/* verificar la conexión */
 	if (mysqli_connect_errno()) {
@@ -299,23 +300,23 @@
     }		
 	
 	$gTitle['text'] 	= "RT Percentiles";
-	$gTitle['fontSize'] = 30;
-	$gAxisX['title']		= "Percentil";
+	$gTitle['fontSize']     = 30;
+	$gAxisX['title']	= "Percentil";
 	$gAxisX['titleFontSize']= 20;
 	$gAxisX['labelFontSize']= 15;
 	$gAxisY['title']	= "Responde time (ms)";	
 	$gAxisY['titleFontSize']= 20;
 	$gAxisY['labelFontSize']= 15;
 	
-	$dataSet1['type'] 			= "bar";
+	$dataSet1['type'] 		= "bar";
 	$dataSet1['legendText'] 	= "All requests"; //Legend name
-	$dataSet1['name'] 			= "All requests"; //tool tip name
+	$dataSet1['name'] 		= "All requests"; //tool tip name
 	$dataSet1['showInLegend'] 	= true;
 	$dataSet1['dataPoints'] 	= $dataPointsAllvec;
 	
-	$dataSet2['type'] 			= "bar";
+	$dataSet2['type'] 		= "bar";
 	$dataSet2['legendText'] 	= "Successful requests"; //Legend name
-	$dataSet2['name'] 			= "Successful requests"; //tool tip name
+	$dataSet2['name'] 		= "Successful requests"; //tool tip name
 	$dataSet2['showInLegend'] 	= true;
 	
 	$dataSet2['dataPoints']	= $dataPoints200vec;
@@ -324,6 +325,7 @@
 	$gdata[1]	=	$dataSet2;
 			
 	$message['title'] 	= $gTitle;
+        $message['zoomEnabled'] = true;  
 	$message['axisX'] 	= $gAxisX;
 	$message['axisY'] 	= $gAxisY;
 	$message['data'] 	= $gdata;	

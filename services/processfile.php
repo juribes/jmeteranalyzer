@@ -10,7 +10,9 @@
 	
 	$MyLog = fopen(".\\Uploads\\".$filename, "r");
 	
+	ob_start();
 	$enlace = mysqli_connect($db_host, $db_user, $db_password, $db_database);
+	ob_end_clean();
 	
 	/* verificar la conexión */
 	if (mysqli_connect_errno()) {

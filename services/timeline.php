@@ -9,7 +9,9 @@
 	
 	$response = array('code' => "", 'message' => "");
 	
+	ob_start();
 	$enlace = mysqli_connect($db_host, $db_user, $db_password, $db_database);
+	ob_end_clean();
 
 	/* verificar la conexión */
 	if (mysqli_connect_errno()) {
@@ -96,7 +98,8 @@
 		$gdata[1]	=	$dataLine2;
 			
 		$message['title'] 	= $gTitle;
-		$message['toolTip'] = $gToolTip;
+                $message['zoomEnabled'] = true;                
+		$message['toolTip']     = $gToolTip;
 		$message['axisX'] 	= $gAxisX;
 		$message['axisY'] 	= $gAxisY;
 		$message['axisY2'] 	= $gAxisY2;

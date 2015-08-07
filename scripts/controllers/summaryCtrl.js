@@ -30,29 +30,28 @@ angular.module('jMeterlyser')
                     $log.log("Successful summay query");
                     break;
                 case "001":
-                    //Error de coneción a la base de datos
-                    $log.log("DB connection error");
-                    alert($scope.res.message); //MEJORAR AQUI: no alerts
+                    //Error de conexión a la base de datos
+                    $log.log("DB connection error. " + res.message);
+					$scope.modalmanager("Error", "DB connection error");
                     break;
                 case "002":
                     //Error en el query
-                    $log.log("Query error");
-                    alert($scope.res.message); //MEJORAR AQUI: no alerts
+                    $log.log("Query error. " + res.message);
+                    $scope.modalmanager("Error", "Query error.");
                     break;
                 default:
-                    alert("Unknown error???"); //MEJORAR AQUI: no alerts
-                    $log.log("Unknown error");
-            }   
-            
+                    $log.log("Unknown error. Message:" + res.message);
+					$scope.modalmanager("Error", "Unknown error, check the log to see more information");
+            }
         }, function(err){
             // error
-            alert("Error in the promise"); //MEJORAR AQUI: no alerts
             $log.log("Error in the promise");
+			$scope.modalmanager("Error", "Error in the promise");
         })
     }
 
-	$scope.iconT        = "glyphicon glyphicon-sort-by-attributes";
-    $scope.iconM        = "glyphicon glyphicon-sort";
+	$scope.iconT  = "glyphicon glyphicon-sort-by-attributes";
+    $scope.iconM  = "glyphicon glyphicon-sort";
 
 /*	
     $scope.sort = function(tipo){
@@ -126,9 +125,6 @@ angular.module('jMeterlyser')
         }
     }	
 */
-	
-	
-	
 	
 	
 	

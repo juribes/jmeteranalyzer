@@ -18,6 +18,12 @@ angular.module('jMeterlyser')
 	$scope.location = navlocation;
 	$scope.location.locURL = $location.path();
 
+	$scope.modalmanager = function(mtitle, mmessage){
+		$scope.modaltitle = mtitle;
+		$scope.modalmessage = mmessage;
+		$('#myModal').modal('show');
+	}
+	
 	$scope.startview = function(){ 
         services.getexecutions()
         .then(function(res){
@@ -26,26 +32,26 @@ angular.module('jMeterlyser')
                 case "000":
 					$scope.executions = res.message.tables;
 					$scope.test.testname = res.message.selected;
-                    $log.log("Successful timeline query");
+                    $log.log("Successful: get executions");
                     break;
                 case "001":
-                    //Error de coneción a la base de datos
-                    $log.log("DB connection error");
-                    alert($scope.res.message); //MEJORAR AQUI: no alerts
+                    //Error de conexión a la base de datos
+                    $log.log("DB connection error. " + res.message);
+					$scope.modalmanager("Error", "DB connection error");
                     break;
                 case "002":
                     //Error en el query
-                    $log.log("Query error");
-                    alert($scope.res.message); //MEJORAR AQUI: no alerts
+                    $log.log("Query error. " + res.message);
+                    $scope.modalmanager("Error", "Query error.");
                     break;
                 default:
-                    alert("Unknown error???"); //MEJORAR AQUI: no alerts
-                    $log.log("Unknown error");
+                    $log.log("Unknown error. Message:" + res.message);
+					$scope.modalmanager("Error", "Unknown error, check the log to see more information");
             }     
         }, function(err){
             // error
-            alert("Error in the promise"); //MEJORAR AQUI: no alerts
             $log.log("Error in the promise");
+			$scope.modalmanager("Error", "Error in the promise");
         })
     }
 	
@@ -56,26 +62,26 @@ angular.module('jMeterlyser')
             switch(res.code) {
                 case "000":
 					$scope.test.testname = res.message.message;
-                    $log.log("Successful timeline query");
+                    $log.log("Successful: set execution");
                     break;
                 case "001":
-                    //Error de coneción a la base de datos
-                    $log.log("DB connection error");
-                    alert($scope.res.message); //MEJORAR AQUI: no alerts
+                    //Error de conexión a la base de datos
+                    $log.log("DB connection error. " + res.message);
+					$scope.modalmanager("Error", "DB connection error");
                     break;
                 case "002":
                     //Error en el query
-                    $log.log("Query error");
-                    alert($scope.res.message); //MEJORAR AQUI: no alerts
+                    $log.log("Query error. " + res.message);
+                    $scope.modalmanager("Error", "Query error.");
                     break;
                 default:
-                    alert("Unknown error???"); //MEJORAR AQUI: no alerts
-                    $log.log("Unknown error");
+                    $log.log("Unknown error. Message:" + res.message);
+					$scope.modalmanager("Error", "Unknown error, check the log to see more information");
             }     
         }, function(err){
             // error
-            alert("Error in the promise"); //MEJORAR AQUI: no alerts
             $log.log("Error in the promise");
+			$scope.modalmanager("Error", "Error in the promise");
         })
     }	
 	
@@ -86,26 +92,27 @@ angular.module('jMeterlyser')
             switch(res.code) {
                 case "000":
 					$scope.test.testname = res.message.message;
-                    $log.log("Successful timeline query");
+                    $log.log("Successful: create execution");
+					$scope.modalmanager("Info", "Test created succefully");
                     break;
                 case "001":
-                    //Error de coneción a la base de datos
-                    $log.log("DB connection error");
-                    alert($scope.res.message); //MEJORAR AQUI: no alerts
+                    //Error de conexión a la base de datos
+                    $log.log("DB connection error. " + res.message);
+					$scope.modalmanager("Error", "DB connection error");
                     break;
                 case "002":
                     //Error en el query
-                    $log.log("Query error");
-                    alert($scope.res.message); //MEJORAR AQUI: no alerts
+                    $log.log("Query error. " + res.message);
+                    $scope.modalmanager("Error", "Query error.");
                     break;
                 default:
-                    alert("Unknown error???"); //MEJORAR AQUI: no alerts
-                    $log.log("Unknown error");
+                    $log.log("Unknown error. Message:" + res.message);
+					$scope.modalmanager("Error", "Unknown error, check the log to see more information");
             }     
         }, function(err){
             // error
-            alert("Error in the promise"); //MEJORAR AQUI: no alerts
             $log.log("Error in the promise");
+			$scope.modalmanager("Error", "Error in the promise");
         })
     }	
 	

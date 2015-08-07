@@ -8,7 +8,9 @@
 	
 	$response = array('code' => "", 'message' => "");
 	
+	ob_start();
 	$enlace = mysqli_connect($db_host, $db_user, $db_password, $db_database);
+	ob_end_clean();
 
 	/* verificar la conexión */
 	if (mysqli_connect_errno()) {
@@ -26,7 +28,14 @@
 	$desde = mysqli_real_escape_string($enlace, $desde);
 	$hasta = mysqli_real_escape_string($enlace, $hasta);
  
-	$query = "SELECT label, count(*) as Samples, AVG(`elapsed`) as AVG, MAX(`elapsed`) as MAX, MIN(`elapsed`) as MIN, STD(`elapsed`) as StdDev FROM $tabla WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") AND responseCode=\"200\" GROUP BY label ORDER BY label";
+// HTTP 200 and 302
+//	$query = "SELECT label, count(*) as Samples, AVG(`elapsed`) as AVG, MAX(`elapsed`) as MAX, MIN(`elapsed`) as MIN, STD(`elapsed`) as StdDev FROM $tabla WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") AND (responseCode=\"200\" or  responseCode=\"302\")GROUP BY label ORDER BY label";
+
+// HTTP 200 only
+// 	$query = "SELECT label, count(*) as Samples, AVG(`elapsed`) as AVG, MAX(`elapsed`) as MAX, MIN(`elapsed`) as MIN, STD(`elapsed`) as StdDev FROM $tabla WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") AND responseCode=\"200\" GROUP BY label ORDER BY label";
+
+// HTTP all
+	$query = "SELECT label, count(*) as Samples, AVG(`elapsed`) as AVG, MAX(`elapsed`) as MAX, MIN(`elapsed`) as MIN, STD(`elapsed`) as StdDev FROM $tabla WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") GROUP BY label ORDER BY label";
  
     $result = mysqli_query($enlace, $query);
 	
