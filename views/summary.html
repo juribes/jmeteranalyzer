@@ -2,31 +2,35 @@
     <div>
         <div>
 			<div class="panel panel-default">
-				<div class="panel-heading"><b>Time Range</b></div>
-				<form class="form-inline">
-					<label>Initial Time </label>
-					<input class="form-control" type="text" ng-model="formcontent.InitialTime" placeholder="YYYY-MM-DD hh:mm:ss" size="21">
-					<label>Final Time </label>
-					<input class="form-control" type="text" ng-model="formcontent.FinalTime" placeholder="YYYY-MM-DD hh:mm:ss" size="21">
-					<button type="submit" class="btn btn-default" ng-click="summarytable()">Submit</button>
-				</form>
+				<div class="panel-heading"><b>Filters</b></div>
+                                <div class="panel-body">
+                                    <form class="form-inline">
+                                            <label>Initial Time </label>
+                                            <input class="form-control" type="text" ng-model="formcontent.InitialTime" placeholder="YYYY-MM-DD hh:mm:ss" size="21">
+                                            <label>Final Time </label>
+                                            <input class="form-control" type="text" ng-model="formcontent.FinalTime" placeholder="YYYY-MM-DD hh:mm:ss" size="21">
+                                            <button type="submit" class="btn btn-default" ng-click="summarytable()">Submit</button>
+                                            <label>Search </label>
+                                            <input class="form-control" type="text" ng-model="request.label" size="21">
+                                    </form>
+                                </div>
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-heading"><b>Summary report</b></div>
 				<table class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
-							<th ng-click="sort('Request')"><span class="{{iconT}}" aria-hidden="true"></span>Request</th>
-							<th ng-click="sort('Samples')"><span class="{{iconM}}" aria-hidden="true"></span>Samples</th>
-							<th ng-click="sort('AVG')"><span class="{{iconM}}" aria-hidden="true"></span>AVG</th>
-							<th ng-click="sort('MAX')"><span class="{{iconM}}" aria-hidden="true"></span>MAX</th>
-							<th ng-click="sort('MIN')"><span class="{{iconM}}" aria-hidden="true"></span>MIN</th>
-							<th ng-click="sort('StdDev')"><span class="{{iconM}}" aria-hidden="true"></span>Std.Dev.</th>
+							<th ng-click="sort('label')"><span ng-class="iconx.label" aria-hidden="true"></span>Request</th>
+							<th ng-click="sort('Samples')"><span ng-class="iconx.Samples" aria-hidden="true"></span>Samples</th>
+							<th ng-click="sort('AVG')"><span ng-class="iconx.AVG" aria-hidden="true"></span>AVG</th>
+							<th ng-click="sort('MAX')"><span ng-class="iconx.MAX" aria-hidden="true"></span>MAX</th>
+							<th ng-click="sort('MIN')"><span ng-class="iconx.MIN" aria-hidden="true"></span>MIN</th>
+							<th ng-click="sort('StdDev')"><span ng-class="iconx.StdDev" aria-hidden="true"></span>Std.Dev.</th>
 						</tr>
 					</thead>
 
 					<tbody>
-						<tr ng-repeat="data in dataset | orderBy:orden">
+						<tr ng-repeat="data in dataset | filter:request | orderBy:order">
 							<td style="width: 50%">{{data.label}}</td>
 							<td>{{data.Samples}}</td>
 							<td>{{data.AVG}}</td>

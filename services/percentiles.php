@@ -329,7 +329,9 @@
 	$gdata[1]	=	$dataSet2;
 			
 	$message['title'] 	= $gTitle;
-    $message['zoomEnabled'] = true;  
+        $message['zoomEnabled'] = true;
+        $message['exportFileName'] = "Percentiles";
+        $message['exportEnabled'] = true;
 	$message['axisX'] 	= $gAxisX;
 	$message['axisY'] 	= $gAxisY;
 	$message['data'] 	= $gdata;	
