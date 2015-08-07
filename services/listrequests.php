@@ -2,24 +2,27 @@
 
     include("configuracion.php");
 	
-	$tabla	=	$_SESSION['execution'];
-	
-	$response = array('code' => "", 'message' => "");
-	
-	ob_start();
-	$enlace = mysqli_connect($db_host, $db_user, $db_password, $db_database);
-	ob_end_clean();
+    $response = array('code' => "", 'message' => "");
 
-	/* verificar la conexión */
-	if (mysqli_connect_errno()) {
-		$message = "Fallo la conexion: ".mysqli_connect_error();
-		
-		$response['code'] = "001"; // code 001 error de conexión
-        $response['message'] = $message;       
+    if (isset($_SESSION['execution'])){
+        $tabla	=	$_SESSION['execution'];
+    }else{
+        $response['message'] = "You need to select a test/execution";
+        $response['code'] = "003";
         die(json_encode($response));
-		
-		exit();
-	}
+    }
+
+    ob_start();
+    $enlace = mysqli_connect($db_host, $db_user, $db_password, $db_database);
+    ob_end_clean();
+
+    /* Verify the connection */
+    if (mysqli_connect_errno()) {
+        $message = utf8_encode("Error in the connection: ".mysqli_connect_error());	
+        $response['code'] = "001"; // code 001 error de conexión
+        $response['message'] = $message; 
+        die(json_encode($response));
+    }
  
 	/* Escapeo las variables */ 
 	$tabla = mysqli_real_escape_string($enlace, $tabla);
@@ -34,11 +37,9 @@
         $message  = 'Query invalido: ' . mysql_error() . "\n";
         $message .= 'Query completa: ' . $query;
             
-		$response['code'] = "002"; // code 002 error de query
+	$response['code'] = "002"; // code 002 error de query
         $response['message'] = $message;        
         die(json_encode($response));
-		
-		exit();
         
     }else{
 		

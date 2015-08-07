@@ -2,29 +2,26 @@
 
     include("configuracion.php");
 	
-	$tabla	=	$_GET['execution'];
+    $tabla	=	$_GET['execution'];
 
-	$response = array('code' => "", 'message' => "");
-	
-	ob_start();
-	$enlace = mysqli_connect($db_host, $db_user, $db_password, $db_database);
-	ob_end_clean();
+    $response = array('code' => "", 'message' => "");
 
-	/* verificar la conexión */
-	if (mysqli_connect_errno()) {
-		$message = "Fallo la conexion: ".mysqli_connect_error();
-		
-		$response['code'] = "001"; // code 001 error de conexión
-        $response['message'] = $message;       
+    ob_start();
+    $enlace = mysqli_connect($db_host, $db_user, $db_password, $db_database);
+    ob_end_clean();
+
+    /* Verify the connection */
+    if (mysqli_connect_errno()) {
+        $message = utf8_encode("Error in the connection: ".mysqli_connect_error());	
+        $response['code'] = "001"; // code 001 error de conexión
+        $response['message'] = $message; 
         die(json_encode($response));
-		
-		exit();
-	}
- 
-	/* Escapeo las variables */ 
-	$tabla = mysqli_real_escape_string($enlace, $tabla);
- 
-	$query = "CREATE TABLE IF NOT EXISTS $tabla (
+    }
+
+    /* Escapeo las variables */ 
+    $tabla = mysqli_real_escape_string($enlace, $tabla);
+
+    $query = "CREATE TABLE IF NOT EXISTS $tabla (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `jtimestamp` bigint(13) NOT NULL,
   `elapsed` int(11) NOT NULL,
@@ -43,17 +40,17 @@
 ) ENGINE = InnoDB;";
  
     $result = mysqli_query($enlace, $query);
-	
-	if (mysqli_query($enlace, $query)) {
-		$response['code'] = "000";
-		$mensaje['message'] = $tabla;
-		$_SESSION['execution']	= $tabla;
-	} else {
-		$response['code'] = "002";
-		$mensaje['message'] = "Error creating table: " . mysqli_error($conn);
-	}
 
-	$response['message'] = $mensaje;
-	echo json_encode($response);
-	
-	mysqli_close($enlace);
+    if (mysqli_query($enlace, $query)) {
+        $response['code'] = "000";
+        $mensaje['message'] = $tabla;
+        $_SESSION['execution']	= $tabla;
+    } else {
+        $response['code'] = "002";
+        $mensaje['message'] = "Error creating table: " . mysqli_error($conn);
+    }
+
+    $response['message'] = $mensaje;
+    echo json_encode($response);
+
+    mysqli_close($enlace);

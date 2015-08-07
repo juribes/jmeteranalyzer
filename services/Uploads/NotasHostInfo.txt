@@ -1,0 +1,26 @@
+Nombre de base de datos MySQL: u543799554_nota
+Usuario MySQL: u543799554_root
+Contraseña: wer82023rew
+http://mywebidea.esy.es/YYkj/
+
+http://www.hostinger.es/
+
+google +
+knekman@gmail.com
+
+
+
+mensajeria json
+catphone app
+
+
+VISTAS
+login
+listar notas (home)
+leer nota / editar_nota
+crear notas
+borrar nota
+
+
+Appcelerator Titanium Mobile Tutorials Playlist
+http://www.youtube.com/watch?v=KxDCgkxBWT8&index=5&list=PLHGSE2kjRS_bVucXYbYNASmmgPCYTUmH6

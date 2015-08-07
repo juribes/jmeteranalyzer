@@ -44,6 +44,11 @@ angular.module('jMeterlyser')
                     $log.log("Query error. " + res.message);
                     $scope.modalmanager("Error", "Query error.");
                     break;
+                case "003":
+                    //Error no test selected
+                    $log.log("No test selected. " + res.message);
+                    $scope.modalmanager("Error", "There is no test selected, please go to Home and select one.");
+                    break;
                 default:
                     $log.log("Unknown error. Message:" + res.message);
 					$scope.modalmanager("Error", "Unknown error, check the log to see more information");
@@ -74,6 +79,11 @@ angular.module('jMeterlyser')
                     $log.log("Query error. " + res.message);
                     $scope.modalmanager("Error", "Query error.");
                     break;
+                case "003":
+                    //Error no test selected
+                    $log.log("No test selected. " + res.message);
+                    $scope.modalmanager("Error", "There is no test selected, please go to Home and select one.");
+                    break;
                 default:
                     $log.log("Unknown error. Message:" + res.message);
 					$scope.modalmanager("Error", "Unknown error, check the log to see more information");
@@ -98,12 +108,17 @@ angular.module('jMeterlyser')
                 case "001":
                     //Error de conexión a la base de datos
                     $log.log("DB connection error. " + res.message);
-					$scope.modalmanager("Error", "DB connection error");
+                    $scope.modalmanager("Error", "DB connection error");
                     break;
                 case "002":
                     //Error en el query
                     $log.log("Query error. " + res.message);
                     $scope.modalmanager("Error", "Query error.");
+                    break;
+                case "003":
+                    //Error no test selected
+                    $log.log("No test selected. " + res.message);
+                    $scope.modalmanager("Error", "There is no test selected, please go to Home and select one.");
                     break;
                 default:
                     $log.log("Unknown error. Message:" + res.message);

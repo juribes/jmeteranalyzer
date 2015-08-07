@@ -2,9 +2,16 @@
 
     include("configuracion.php");
 	
-	$tabla	=	$_SESSION['execution'];
-	
 	$response = array('code' => "", 'message' => "");
+	
+	if (isset($_SESSION['execution'])){
+		$tabla	=	$_SESSION['execution'];
+	}else{
+		$response['message'] = "You need to select a test/execution";
+		$response['code'] = "003";
+		die(json_encode($response));
+	}
+	
 	$dataPointsAll 		= array();
 	$dataPoints200		= array();
 	$dataPointsAllvec 	= array();
@@ -14,15 +21,12 @@
 	$enlace = mysqli_connect($db_host, $db_user, $db_password, $db_database);
 	ob_end_clean();
 
-	/* verificar la conexión */
+	/* Verify the connection */
 	if (mysqli_connect_errno()) {
-		$message = "Fallo la conexion: ".mysqli_connect_error();
-		
+		$message = utf8_encode("Error in the connection: ".mysqli_connect_error());	
 		$response['code'] = "001"; // code 001 error de conexión
-        $response['message'] = $message;       
-        die(json_encode($response));
-		
-		exit();
+        $response['message'] = $message; 
+		die(json_encode($response));
 	}
  
 	/* Escapeo las variables */ 
@@ -325,7 +329,7 @@
 	$gdata[1]	=	$dataSet2;
 			
 	$message['title'] 	= $gTitle;
-        $message['zoomEnabled'] = true;  
+    $message['zoomEnabled'] = true;  
 	$message['axisX'] 	= $gAxisX;
 	$message['axisY'] 	= $gAxisY;
 	$message['data'] 	= $gdata;	
@@ -334,6 +338,4 @@
 	$response['message'] = $message;
 	echo json_encode($response);
 	
-	
 	mysqli_close($enlace);
-

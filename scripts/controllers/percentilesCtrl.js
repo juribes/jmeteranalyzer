@@ -18,15 +18,21 @@ angular.module('jMeterlyser')
 	$scope.location = navlocation;
 	$scope.dataGraph = {};
 	
+	$scope.modalmanager = function(mtitle, mmessage){
+		$scope.modaltitle = mtitle;
+		$scope.modalmessage = mmessage;
+		$('#myModal').modal('show');
+	}
+	
     $scope.startview = function(){ 
         services.percentiles()
         .then(function(res){
             // success
             switch(res.code) {
                 case "000":
-					$scope.dataGraph = res.message;
-					var chart = new CanvasJS.Chart("chartContainer", $scope.dataGraph);
-					chart.render();
+                    $scope.dataGraph = res.message;
+                    var chart = new CanvasJS.Chart("chartContainer", $scope.dataGraph);
+                    chart.render();
                     $log.log("Successful get percentiles");
                     break;
                 case "001":
@@ -39,16 +45,21 @@ angular.module('jMeterlyser')
                     $log.log("Query error. " + res.message);
                     $scope.modalmanager("Error", "Query error.");
                     break;
+                case "003":
+                    //Error no test selected
+                    $log.log("No test selected. " + res.message);
+                    $scope.modalmanager("Error", "There is no test selected, please go to Home and select one.");
+                    break;
                 default:
                     $log.log("Unknown error. Message:" + res.message);
-					$scope.modalmanager("Error", "Unknown error, check the log to see more information");
+                    $scope.modalmanager("Error", "Unknown error, check the log to see more information");
             }    
         }, function(err){
             // error
             $log.log("Error in the promise");
-			$scope.modalmanager("Error", "Error in the promise");
+            $scope.modalmanager("Error", "Error in the promise");
         })
     },
 	
-	$scope.init();
+    $scope.init();
   }]);

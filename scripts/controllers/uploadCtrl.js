@@ -65,14 +65,21 @@ angular.module('jMeterlyser')
         console.info('uploader', uploader);
 	
 		// JCUS
-		$scope.process = function(filename, servername){ 
+		
+	$scope.modalmanager = function(mtitle, mmessage){
+		$scope.modaltitle = mtitle;
+		$scope.modalmessage = mmessage;
+		$('#myModal').modal('show');
+	}
+		
+	$scope.process = function(filename, servername){ 
         services.process(filename, servername)
         .then(function(res){
             // success
             switch(res.code) {
                 case "000":
-					$scope.respuesta = res.message;
-					alert($scope.respuesta);
+                    $scope.respuesta = res.message;
+                    alert($scope.respuesta);
                     $log.log("Successful process file");
                     break;
                 case "001":
@@ -84,6 +91,11 @@ angular.module('jMeterlyser')
                     //Error en el query
                     $log.log("Query error. " + res.message);
                     $scope.modalmanager("Error", "Query error.");
+                    break;
+                case "003":
+                    //Error no test selected
+                    $log.log("No test selected. " + res.message);
+                    $scope.modalmanager("Error", "There is no test selected, please go to Home and select one.");
                     break;
                 default:
                     $log.log("Unknown error. Message:" + res.message);
