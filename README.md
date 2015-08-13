@@ -18,7 +18,7 @@ It is recommended but not mandatory do these configurations in PHP and MySQL
 ### PHP
 File: xampp\php\php.ini (in a XAMPP server)
 ```
-max_execution_time = 600 
+max_execution_time = 1200 
 max_input_time = 360 
 post_max_size = 80M 
 upload_max_filesize = 80M 
