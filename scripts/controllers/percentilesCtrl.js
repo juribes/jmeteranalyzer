@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name jMeterlyser.controller:percentilesCtrl
+ * @name JMeteranalyzer.controller:percentilesCtrl
  * @description
  * # percentilesCtrl
- * Controller of the jMeterlyser
+ * Controller of the JMeteranalyzer
  */
-angular.module('jMeterlyser')
+angular.module('JMeteranalyzer')
   .controller('percentilesCtrl', [ '$scope', '$location', '$log', 'services', 'navlocation', function ($scope, $location, $log, services, navlocation) {
   
     $scope.init = function(){

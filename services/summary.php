@@ -8,7 +8,8 @@
 	$response = array('code' => "", 'message' => "");        
         
 	if (isset($_SESSION['execution'])){
-		$tabla	=	$_SESSION['execution'];
+		$testname =	$_SESSION['execution'];
+		$testid	  =	$_SESSION['executionID'];
 	}else{
 		$response['message'] = "You need to select a test/execution";
 		$response['code'] = "003";
@@ -28,33 +29,30 @@
 	}
  
 	/* Escapeo las variables */ 
-	$tabla = mysqli_real_escape_string($enlace, $tabla);
+	$testlogtable = mysqli_real_escape_string($enlace, "testlog".$testid);
 	$desde = mysqli_real_escape_string($enlace, $desde);
 	$hasta = mysqli_real_escape_string($enlace, $hasta);
  
 // HTTP 200 and 302
-//	$query = "SELECT label, count(*) as Samples, AVG(`elapsed`) as AVG, MAX(`elapsed`) as MAX, MIN(`elapsed`) as MIN, STD(`elapsed`) as StdDev FROM $tabla WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") AND (responseCode=\"200\" or  responseCode=\"302\")GROUP BY label ORDER BY label";
+//	$query = "SELECT label, count(*) as Samples, AVG(`elapsed`) as AVG, MAX(`elapsed`) as MAX, MIN(`elapsed`) as MIN, STD(`elapsed`) as StdDev FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") AND (responseCode=\"200\" or  responseCode=\"302\")GROUP BY label ORDER BY label";
 
 // HTTP 200 only
-// 	$query = "SELECT label, count(*) as Samples, AVG(`elapsed`) as AVG, MAX(`elapsed`) as MAX, MIN(`elapsed`) as MIN, STD(`elapsed`) as StdDev FROM $tabla WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") AND responseCode=\"200\" GROUP BY label ORDER BY label";
+// 	$query = "SELECT label, count(*) as Samples, AVG(`elapsed`) as AVG, MAX(`elapsed`) as MAX, MIN(`elapsed`) as MIN, STD(`elapsed`) as StdDev FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") AND responseCode=\"200\" GROUP BY label ORDER BY label";
 
 // HTTP all
-	$query = "SELECT label, count(*) as Samples, AVG(`elapsed`) as AVG, MAX(`elapsed`) as MAX, MIN(`elapsed`) as MIN, STD(`elapsed`) as StdDev FROM $tabla WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") GROUP BY label ORDER BY label";
+	$query = "SELECT label, count(*) as Samples, AVG(`elapsed`) as AVG, MAX(`elapsed`) as MAX, MIN(`elapsed`) as MIN, STD(`elapsed`) as StdDev FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") GROUP BY label ORDER BY label";
  
     $result = mysqli_query($enlace, $query);
 	
-//	echo $query;
-	
     if (!$result) {
-        $message  = 'Query invalido: ' . mysql_error() . "\n";
-        $message .= 'Query completa: ' . $query;
+        $message  = 'Invalid query SUMMARY: ' . mysql_error() . "\n";
+        $message .= 'Full query: ' . $query;
             
 		$response['code'] = "002"; // code 002 error de query
-        $response['message'] = $message;        
+        $response['message'] = $message;
+		mysqli_close($enlace);			
         die(json_encode($response));
 		
-		exit();
-        
     }else{
 		
 		$data = array();
@@ -69,7 +67,6 @@
             $data["StdDev"]     = round($row->StdDev,2); 
 			
             $mensaje[]=$data;
-			
         }
 		
 		$response['code'] = "000";

@@ -47,4 +47,4 @@ nbproject
 .buildignore
 services\configuracion.php
 DOC
-services\Uploads
+services\Uploads\*

@@ -5,7 +5,8 @@
     $response = array('code' => "", 'message' => "");
 
     if (isset($_SESSION['execution'])){
-        $tabla	=	$_SESSION['execution'];
+		$testname =	$_SESSION['execution'];
+		$testid	  =	$_SESSION['executionID'];
     }else{
         $response['message'] = "You need to select a test/execution";
         $response['code'] = "003";
@@ -25,20 +26,21 @@
     }
  
 	/* Escapeo las variables */ 
-	$tabla = mysqli_real_escape_string($enlace, $tabla);
+	$testid = mysqli_real_escape_string($enlace, $testid);
  
-	$query = "SELECT DISTINCT label FROM $tabla ORDER BY label";
+	$query = "SELECT label FROM tbl_labels WHERE tbl_tests_id_test = $testid ORDER BY label";
  
     $result = mysqli_query($enlace, $query);
 	
 //	echo $query;
 	
     if (!$result) {
-        $message  = 'Query invalido: ' . mysql_error() . "\n";
-        $message .= 'Query completa: ' . $query;
+        $message  = 'Invalid query LIST REQUEST: ' . mysql_error() . "\n";
+        $message .= 'Full query: ' . $query;
             
-	$response['code'] = "002"; // code 002 error de query
-        $response['message'] = $message;        
+		$response['code'] = "002"; // code 002 error de query
+        $response['message'] = $message;
+		mysqli_close($enlace);
         die(json_encode($response));
         
     }else{
@@ -46,11 +48,8 @@
 		$data = array();
         $mensaje = array();
 		while($row = $result->fetch_object()){
-			
-			$data["label"]      = $row->label; 
-            			
+			$data["label"]      = $row->label; 			
             $mensaje[]=$data;
-			
         }
 		
 		$response['code'] = "000";

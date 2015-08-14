@@ -1,7 +1,10 @@
-<div>
+<div style="padding: 5px">
 
 	<h3>Select files</h3>
-	<input type="file" nv-file-select="" uploader="uploader" multiple />
+	<span class="btn btn-primary btn-file glyphicon glyphicon-folder-open">
+		Browse&hellip; <input type="file" multiple aria-describedby="sizing-addon3" nv-file-select="" uploader="uploader">
+	</span>
+	
 	<h3>Upload queue</h3>
 	<p>Queue length: {{ uploader.queue.length }}</p>
 
@@ -40,7 +43,7 @@
 						<span class="glyphicon glyphicon-trash"></span> Remove
 					</button>
 					<span ng-show="item.isSuccess">
-						<button type="button" class="btn btn-xs"  ng-click="process(item.file.name, item.servername)">
+						<button type="button" class="btn btn-xs"  ng-click="process(item.file.name, item.servername, multifile)">
 							<span class="glyphicon glyphicon-save"></span> Process
 						</button>
 						<input type="text" placeholder="server name" ng-model="item.servername">
@@ -67,7 +70,19 @@
 			<span class="glyphicon glyphicon-trash"></span> Remove all
 		</button>
 	</div>
+	
+	<div class="container" ng-show="showAnalize">
+		<div class="row">
+			<div class="col-md-4"></div>
+			<div class="col-md-4 text-center">
+				<button type="button" class="btn btn-success btn-lg" ng-click="analyze()">Analyze</button>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+	</div>
+	
 	<!-- Modal stuff -->
+	<!-- Modal Error/Info -->
 	<div class="modal fade" id="myModal" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -84,5 +99,34 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Modal Loading/Analyzing -->
+	<div class="modal fade" id="ModalLoading" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content text-center">
+				<h1>{{modalverb}}</h1>
+				<img src="images/loading.gif">
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal Confirm -->
+	<div class="modal fade" id="ModalConfirm" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">{{modaltitle}}</h4>
+				</div>
+				<div class="modal-body">
+					<p>{{modalmessage}}</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" ng-click="multifile = true; process(fileid, servname, multifile)">Yes</button> <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<!-- Modal stuff -->	
 </div>

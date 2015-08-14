@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name jMeterlyser.controller:generalinfoCtrl
+ * @name JMeteranalyzer.controller:generalinfoCtrl
  * @description
  * # generalinfoCtrl
- * Controller of the jMeterlyser
+ * Controller of the JMeteranalyzer
  */
-angular.module('jMeterlyser')
+angular.module('JMeteranalyzer')
   .controller('generalinfoCtrl', [ '$scope', '$location', '$log', 'services', 'navlocation', function ($scope, $location, $log, services, navlocation) {
 
     $scope.init = function(){

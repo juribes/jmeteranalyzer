@@ -2,17 +2,16 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <title>jMeterlyzer</title>
+    <title>JMeteranalyzer</title>
     <meta name="description" content="App to process JMeter results">
     <meta name="viewport" content="width=device-width">
 	
-
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
 
     <link rel="stylesheet" href="styles/main.css">
 
   </head>
-  <body ng-app="jMeterlyser">
+  <body ng-app="JMeteranalyzer">
 
     <!-- Add your site or application content here -->
     <div class="header" ng-controller="navbarCtrl">
@@ -27,11 +26,11 @@
               <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#/">jMeterlyzer</a>
+            <a class="navbar-brand" href="#/">JMeteranalyzer</a>
           </div>
 			<div ng-switch on="test.testname">
 				<div ng-switch-when="">
-					<p>Please select a execution</p>
+					<p>Please <a href="#/home">select a execution</a></p>
 				</div>
 				<div ng-switch-default>
 					<p>The selected execution is: {{test.testname}}</p>
@@ -60,7 +59,7 @@
 
     <div class="footer">
       <div class="container">
-        <p>jMeterlyser by Juan Camilo Uribe Sanin</p>
+        <p>JMeteranalyzer by Juan Camilo Uribe Sanin</p>
       </div>
     </div>
 

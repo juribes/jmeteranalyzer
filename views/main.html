@@ -5,34 +5,56 @@
 			
 			<div ng-switch on="test.testname">
 				<div ng-switch-when="">
-					<p>Please select a execution</p>
+					<p>Please select a test</p>
 				</div>
 				<div ng-switch-default>
-					<p>The selected execution is: {{test.testname}}</p>
+					<p>The selected test is: {{test.testname}}</p>
 				</div>
 			</div>
 			
-			<form>
+			<form name="settestForm">
 				<div class="form-group">
-					<label>Select the execution you want to analyze</label>
-					<select ng-model="testname" class="form-control">
-						<option ng-repeat="execution in executions" value="{{execution.name}}">{{execution.name}}</option>
+					<label>Select the test you want to analyze</label>
+					<select ng-model="testname" class="form-control" required>
+						<option ng-repeat="execution in executions" value="{{execution.id_test}}"  ng-selected="execution.name == test.testname" >{{execution.name}}</option>
 					</select>
 				</div>
 				<button type="submit" class="btn btn-default" ng-click="setexecution()">Set</button>
 			</form>
+			<div ng-show="showAnalize">
+				<div class="row">
+					<div class="col-md-4"></div>
+					<div class="col-md-4 text-center">
+						<button type="button" class="btn btn-success btn-lg" ng-click="analyze()">Re-Analyze</button>
+					</div>
+					<div class="col-md-4"></div>
+				</div>
+			</div>
 			<br>
-			<h3>Or Create new execution...</h3>
-			<form>
+			<h3>Or Create new test...</h3>
+			<form name="newtestForm">
 				<div class="form-group">
-					<label>Execution</label>
-					<input type="text" ng-model="newtest" class="form-control" />
+					<label>Test</label>
+					<input type="text" ng-model="newtest" class="form-control" required />
 				</div>
 				<button type="submit" class="btn btn-default" ng-click="createexecution()">Create</button>
 			</form>
+                        <br>
+			<h3>Delete tests</h3>
+			<form name="settestForm">
+				<div class="form-group">
+					<label>Select the test you want to delete</label>
+					<select ng-model="testname" class="form-control" required>
+						<option ng-repeat="execution in executions" value="{{execution.id_test}}"  ng-selected="execution.name == test.testname" >{{execution.name}}</option>
+					</select>
+				</div>
+				<button type="submit" class="btn btn-danger" ng-click="deletetestconfirm()">Delete</button>
+			</form>
 		</div>
 	</div>
+	
 	<!-- Modal stuff -->
+	<!-- Modal Error/Info -->
 	<div class="modal fade" id="myModal" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -49,5 +71,35 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Modal Loading/Analyzing -->
+	<div class="modal fade" id="ModalLoading" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content text-center">
+				<h1>{{modalverb}}</h1>
+				<img src="images/loading.gif">
+			</div>
+		</div>
+	</div>
+	
+        
+        <!-- Modal Confirm -->
+	<div class="modal fade" id="ModalConfirm" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">{{modaltitle}}</h4>
+				</div>
+				<div class="modal-body">
+					<p>{{modalmessage}}</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" ng-click="deletetest()">Yes</button> <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
+				</div>
+			</div>
+		</div>
+	</div>
+        
 	<!-- Modal stuff -->
 </div>

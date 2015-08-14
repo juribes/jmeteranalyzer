@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc service
- * @name jMeterlyser.services
+ * @name JMeteranalyzer.services
  * @description
  * # services
- * Factory in the jMeterlyser.
+ * Factory in the JMeteranalyzer.
  */
-angular.module('jMeterlyser')
+angular.module('JMeteranalyzer')
   .service('services',['$http', '$log', '$q', function($http, $log, $q) {
     
     var servicio = this;
@@ -84,9 +84,9 @@ angular.module('jMeterlyser')
         return defer.promise;
     };
 	
-	servicio.process = function(filename, servername){
+	servicio.process = function(filename, servername, multifile){
         var defer = $q.defer();
-        $http.get('services/processfile.php?filename='+filename+'&servername='+servername)
+        $http.get('services/processfile.php?filename='+filename+'&servername='+servername+'&multifile='+multifile)
         .success(function(res){
             defer.resolve(res);
         })
@@ -96,7 +96,7 @@ angular.module('jMeterlyser')
         return defer.promise;
     };
 
-	servicio.setexecution = function(execution){
+    servicio.setexecution = function(execution){
         var defer = $q.defer();
         $http.get('services/setexecution.php?execution='+execution)
         .success(function(res){
@@ -108,7 +108,7 @@ angular.module('jMeterlyser')
         return defer.promise;
     };
 
-	servicio.createexecution = function(execution){
+    servicio.createexecution = function(execution){
         var defer = $q.defer();
         $http.get('services/createexecution.php?execution='+execution)
         .success(function(res){
@@ -120,7 +120,7 @@ angular.module('jMeterlyser')
         return defer.promise;
     };
 
-	servicio.getexecutions = function(){
+    servicio.getexecutions = function(){
         var defer = $q.defer();
         $http.get('services/getexecutions.php')
         .success(function(res){
@@ -132,4 +132,28 @@ angular.module('jMeterlyser')
         return defer.promise;
     };	
 	
+    servicio.analyze = function(){
+        var defer = $q.defer();
+        $http.get('services/analyze.php')
+        .success(function(res){
+            defer.resolve(res);
+        })
+        .error(function(err){
+            defer.reject(err);
+        });
+        return defer.promise;
+    };		
+
+    servicio.deletetest = function(execution){
+        var defer = $q.defer();
+        $http.get('services/delete.php?execution='+execution)
+        .success(function(res){
+            defer.resolve(res);
+        })
+        .error(function(err){
+            defer.reject(err);
+        });
+        return defer.promise;
+    };
+          
   }]);

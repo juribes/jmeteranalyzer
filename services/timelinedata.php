@@ -2,14 +2,15 @@
 
     include("configuracion.php");
 	
-	$desde	=	$_GET['iniTime'];
-	$hasta	=	$_GET['endTime'];
-	$request=	$_GET['request'];
+	$desde	 =	$_GET['iniTime'];
+	$hasta	 =	$_GET['endTime'];
+	$request =	$_GET['request'];
 	
 	$response = array('code' => "", 'message' => "");
 	
 	if (isset($_SESSION['execution'])){
-		$tabla	=	$_SESSION['execution'];
+		$testname =	$_SESSION['execution'];
+		$testid	  =	$_SESSION['executionID'];
 	}else{
 		$response['message'] = "You need to select a test/execution";
 		$response['code'] = "003";
@@ -29,26 +30,27 @@
 	}
  
 	/* Escapeo las variables */ 
-	$tabla 		= mysqli_real_escape_string($enlace, $tabla);
-	$desde 		= mysqli_real_escape_string($enlace, $desde);
-	$hasta 		= mysqli_real_escape_string($enlace, $hasta);
-	$request 	= mysqli_real_escape_string($enlace, $request);
+	$testlogtable 	= mysqli_real_escape_string($enlace, "testlog".$testid);
+	$desde 			= mysqli_real_escape_string($enlace, $desde);
+	$hasta 			= mysqli_real_escape_string($enlace, $hasta);
+	$request 		= mysqli_real_escape_string($enlace, $request);
  
-//	$query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $tabla WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" AND responseCode=\"200\" GROUP BY label, HOUR(Date), MINUTE(Date) ORDER BY Date";
- 	$query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $tabla WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" AND responseCode=\"200\" GROUP BY label, HOUR(Date), MINUTE(Date), SECOND(Date) ORDER BY Date";
+//	$query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" AND responseCode=\"200\" GROUP BY label, HOUR(Date), MINUTE(Date) ORDER BY Date";
+ 	$query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" AND responseCode=\"200\" GROUP BY label, HOUR(Date), MINUTE(Date), SECOND(Date) ORDER BY Date";
 
     $result = mysqli_query($enlace, $query);
 
 
-// SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $tabla WHERE FROM_UNIXTIME(`jtimestamp` div 1000) <= "2015-06-24 10:24:53" and label ="1 /Shibboleth.sso/Login" GROUP BY label, HOUR(Date), MINUTE(Date) ORDER BY Date 	
+// SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $testlogtable WHERE FROM_UNIXTIME(`jtimestamp` div 1000) <= "2015-06-24 10:24:53" and label ="1 /Shibboleth.sso/Login" GROUP BY label, HOUR(Date), MINUTE(Date) ORDER BY Date 	
 //echo $query;
 	
     if (!$result) {
-        $message  = 'Query invalido: ' . mysql_error() . "\n";
-        $message .= 'Query completa: ' . $query;
+        $message  = 'Invalid query Timeline Data: ' . mysql_error() . "\n";
+        $message .= 'Full query: ' . $query;
             
 		$response['code'] 		= "002"; // code 002 error de query
-        $response['message'] 	= $message;        
+        $response['message'] 	= $message;  
+		mysqli_close($enlace);		
         die(json_encode($response));
 		
 		exit();

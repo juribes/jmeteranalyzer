@@ -2,26 +2,26 @@
 
 /**
  * @ngdoc factory
- * @name jMeterlyser.factory
+ * @name JMeteranalyzer.factory
  * @description
  * # factory
- * Factory in the jMeterlyser.
+ * Factory in the JMeteranalyzer.
  */
-angular.module('jMeterlyser')
+angular.module('JMeteranalyzer')
   .factory('interData', function() {	  
 	    return {
-			InitialTime : '2015-06-24 09:24:53',
-			FinalTime : '2015-06-24 10:24:53',
+			InitialTime : '',
+			FinalTime : '',
 			req : ''
 		};
   });
   
-angular.module('jMeterlyser')
+angular.module('JMeteranalyzer')
   .factory('navlocation', ['$location', function($location) {	  
 	    return {locURL: "/"};
   }]);
   
-angular.module('jMeterlyser')
+angular.module('JMeteranalyzer')
   .factory('testid', ['$location', function($location) {	  
 	    return {testname: ""};
   }]);

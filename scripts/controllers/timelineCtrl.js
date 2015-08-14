@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name jMeterlyser.controller:timelineCtrl
+ * @name JMeteranalyzer.controller:timelineCtrl
  * @description
  * # timelineCtrl
- * Controller of the jMeterlyser
+ * Controller of the JMeteranalyzer
  */
-angular.module('jMeterlyser')
+angular.module('JMeteranalyzer')
   .controller('timelineCtrl', [ '$scope', '$location', '$log', 'services', 'interData', 'navlocation', function ($scope, $location, $log, services, interData, navlocation) {
   
     $scope.init = function(){

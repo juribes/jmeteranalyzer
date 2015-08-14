@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name jMeterlyser
+ * @name JMeteranalyzer
  * @description
- * # jMeterlyser
+ * # JMeteranalyzer
  *
  * Main module of the application.
  */
 angular
-  .module('jMeterlyser', [
+  .module('JMeteranalyzer', [
     'ngAnimate',
     'ngCookies',
     'ngResource',

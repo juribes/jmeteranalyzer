@@ -16,10 +16,7 @@
             die(json_encode($response));
 	}
 
-	/* Escapeo las variables */ 
-	$db_database = mysqli_real_escape_string($enlace, $db_database);
- 
-	$query = "SHOW tables FROM $db_database";
+	$query = "SELECT name, id_test FROM tbl_tests";
  
     $result = mysqli_query($enlace, $query);
 	
@@ -29,12 +26,12 @@
         $response['message'] = $message;  
         die(json_encode($response));
     }else{
-		
         $data = array();
-        $tables = array();
+        $tests = array();
         while($row = $result->fetch_object()){
-            $data["name"] = $row->Tables_in_k12_results; 			
-            $tables[]=$data;
+            $data["name"] 		= $row->name; 
+			$data["id_test"] 	= $row->id_test; 
+            $tests[] 			= $data;
         }
 		
         if (isset($_SESSION['execution'])){
@@ -44,7 +41,7 @@
         }
 		
         $response['code'] 	= "000";
-        $mensaje['tables']	= $tables;
+        $mensaje['tests']	= $tests;
         $response['message']	= $mensaje;
         echo json_encode($response);
 		
