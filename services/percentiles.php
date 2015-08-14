@@ -58,6 +58,9 @@
 	
 	$gTitle['text'] 	= "RT Percentiles";
 	$gTitle['fontSize']     = 30;
+        $gLegend['fontFamily']  = "Helvetica";
+        $gLegend['cursor']      = "pointer";
+        $gLegend['itemclick']   = '';
 	$gAxisX['title']	= "Percentil";
 	$gAxisX['titleFontSize']= 20;
 	$gAxisX['labelFontSize']= 15;
@@ -66,12 +69,14 @@
 	$gAxisY['labelFontSize']= 15;
 	
 	$dataSet1['type'] 		= "bar";
+        $dataSet1['color']              = "green";
 	$dataSet1['legendText'] 	= "All requests"; //Legend name
 	$dataSet1['name'] 		= "All requests"; //tool tip name
 	$dataSet1['showInLegend'] 	= true;
 	$dataSet1['dataPoints'] 	= $dataPointsAllvec;
 	
 	$dataSet2['type'] 		= "bar";
+        $dataSet2['color']              = "blue";
 	$dataSet2['legendText'] 	= "Successful requests"; //Legend name
 	$dataSet2['name'] 		= "Successful requests"; //tool tip name
 	$dataSet2['showInLegend'] 	= true;
@@ -82,9 +87,10 @@
 	$gdata[1]	=	$dataSet2;
 			
 	$message['title'] 	= $gTitle;
-    $message['zoomEnabled'] = true;
-    $message['exportFileName'] = "Percentiles";
-    $message['exportEnabled'] = true;
+        $message['legend'] 	= $gLegend;
+        $message['zoomEnabled'] = true;
+        $message['exportFileName'] = "Percentiles";
+        $message['exportEnabled'] = true;
 	$message['axisX'] 	= $gAxisX;
 	$message['axisY'] 	= $gAxisY;
 	$message['data'] 	= $gdata;	

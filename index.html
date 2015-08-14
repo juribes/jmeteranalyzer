@@ -5,9 +5,7 @@
     <title>JMeteranalyzer</title>
     <meta name="description" content="App to process JMeter results">
     <meta name="viewport" content="width=device-width">
-	
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
-
     <link rel="stylesheet" href="styles/main.css">
 
   </head>
@@ -28,27 +26,25 @@
 
             <a class="navbar-brand" href="#/">JMeteranalyzer</a>
           </div>
-			<div ng-switch on="test.testname">
-				<div ng-switch-when="">
-					<p>Please <a href="#/home">select a execution</a></p>
-				</div>
-				<div ng-switch-default>
-					<p>The selected execution is: {{test.testname}}</p>
-				</div>
-			</div>
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-            <ul class="nav navbar-nav">
-              <li ng-class="{active: location.locURL == '/'}"><a href="#/">Home</a></li>
-              <li ng-class="{active: location.locURL == '/general_info'}"><a ng-href="#/general_info">General Info</a></li>
-			  <li ng-class="{active: location.locURL == '/summary'}"><a ng-href="#/summary">Summary</a></li>
-              <li ng-class="{active: location.locURL == '/timelineData'}"><a ng-href="#/timelineData">Timeline Data</a></li>
-              <li ng-class="{active: location.locURL == '/timeline'}"><a ng-href="#/timeline">Timeline</a></li>
-			  <li ng-class="{active: location.locURL == '/percentiles'}"><a ng-href="#/percentiles">Percentiles</a></li>
-			  <li ng-class="{active: location.locURL == '/upload'}"><a ng-href="#/upload">Upload</a></li>
-            </ul>
-          </div>
-		  
+            <div ng-switch on="test.testname">
+                <div ng-switch-when="">
+                    <p>Please <a href="#/home">select a execution</a></p>
+                </div>
+                <div ng-switch-default>
+                    <p>The selected execution is: {{test.testname}}</p>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" id="js-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li ng-class="{active: location.locURL == '/'}"><a href="#/">Home</a></li>
+                    <li ng-class="{active: location.locURL == '/general_info'}"><a ng-href="#/general_info">General Info</a></li>
+                    <li ng-class="{active: location.locURL == '/summary'}"><a ng-href="#/summary">Summary</a></li>
+                    <li ng-class="{active: location.locURL == '/timelineData'}"><a ng-href="#/timelineData">Timeline Data</a></li>
+                    <li ng-class="{active: location.locURL == '/timeline'}"><a ng-href="#/timeline">Timeline</a></li>
+                    <li ng-class="{active: location.locURL == '/percentiles'}"><a ng-href="#/percentiles">Percentiles</a></li>
+                    <li ng-class="{active: location.locURL == '/upload'}"><a ng-href="#/upload">Upload</a></li>
+                </ul>
+            </div>
         </div>
       </div>
     </div>
@@ -62,7 +58,8 @@
         <p>JMeteranalyzer by Juan Camilo Uribe Sanin</p>
       </div>
     </div>
-
+    
+<!-- Libraries --> 
     <script src="lib/jquery/dist/jquery.js"></script>
     <script src="lib/angular/angular.js"></script>
     <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
@@ -72,24 +69,22 @@
     <script src="lib/angular-route/angular-route.js"></script>
     <script src="lib/angular-sanitize/angular-sanitize.js"></script>
     <script src="lib/angular-touch/angular-touch.js"></script>
- 	<script src="lib/canvasjs/canvasjs.min.js"></script>
-	<script src="lib/angular-file-upload/angular-file-upload.js"></script>
-	<script src="lib/console-sham/console-sham.js"></script>
+    <script src="lib/canvasjs/canvasjs.min.js"></script>
+    <script src="lib/angular-file-upload/angular-file-upload.js"></script>
+    <script src="lib/console-sham/console-sham.js"></script>
 	
-	
-    
 <!-- Controllers --> 	
-  	<script src="scripts/app.js"></script>
-  	<script src="scripts/controllers/navbarCtrl.js"></script>
-  	<script src="scripts/controllers/mainCtrl.js"></script>
-	<script src="scripts/controllers/summaryCtrl.js"></script>
-	<script src="scripts/controllers/timelineCtrl.js"></script>
-	<script src="scripts/controllers/timelinedataCtrl.js"></script>
-	<script src="scripts/controllers/generalinfoCtrl.js"></script>
-	<script src="scripts/controllers/percentilesCtrl.js"></script>
-	<script src="scripts/controllers/uploadCtrl.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/navbarCtrl.js"></script>
+    <script src="scripts/controllers/mainCtrl.js"></script>
+    <script src="scripts/controllers/summaryCtrl.js"></script>
+    <script src="scripts/controllers/timelineCtrl.js"></script>
+    <script src="scripts/controllers/timelinedataCtrl.js"></script>
+    <script src="scripts/controllers/generalinfoCtrl.js"></script>
+    <script src="scripts/controllers/percentilesCtrl.js"></script>
+    <script src="scripts/controllers/uploadCtrl.js"></script>
     <script src="scripts/services/services.js"></script>
-	<script src="scripts/factory/factory.js"></script>
+    <script src="scripts/factory/factory.js"></script>
 	
   </body>
 </html>

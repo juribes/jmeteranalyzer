@@ -157,11 +157,11 @@
 	$result = mysqli_query($enlace, $query);
 	
 	if (!$result) {
-        $message  = 'Invalid query DELETE labels: ' . mysql_error() . "\n";
-        $message .= 'Full query: ' . $query;
-            
-		$response['code'] = "002"; // code 002 error de query
-        $response['message'] = $message;
+            $message  = 'Invalid query DELETE labels: ' . mysql_error() . "\n";
+            $message .= 'Full query: ' . $query;
+
+            $response['code'] = "002"; // code 002 error de query
+            $response['message'] = $message;
 		mysqli_close($enlace);		
         die(json_encode($response));
     }
@@ -201,53 +201,53 @@
 		
 	}
 	
-	/* Percentiles */
+    /* Percentiles */
 
-	$dataPointsAll 		= array();
-	$dataPoints200		= array();
-	$dataPointsAllvec 	= array();
-	$dataPoints200vec	= array();
-	$percentiles		= array();
+    $dataPointsAll 		= array();
+    $dataPoints200		= array();
+    $dataPointsAllvec 	= array();
+    $dataPoints200vec	= array();
+    $percentiles		= array();
 	
-	/*Percentil 100 all*/
-	$query = "SELECT MAX(elapsed) as p100allelapse, COUNT(*) as p100allcount FROM $testlogtable";
+    /*Percentil 100 all*/
+    $query = "SELECT MAX(elapsed) as p100allelapse, COUNT(*) as p100allcount FROM $testlogtable";
     $result = mysqli_query($enlace, $query);
 	
     if (!$result) {
         $message  = 'Query invalido: ' . mysql_error() . "\n";
         $message .= 'Query completa: ' . $query;
             
-		$response['code'] 		= "002"; // code 002 error de query
+        $response['code'] 	= "002"; // code 002 error de query
         $response['message'] 	= $message;
-		mysqli_close($enlace);			
+        mysqli_close($enlace);			
         die(json_encode($response));
     }else{
-		$row = $result->fetch_object();
-		$dataPointsAll['y']		= intval($row->p100allelapse);
-		$dataPointsAll['label']	= "100";
-		$dataPointsAllvec[0]	= $dataPointsAll;
-		$p100allcount			= $row->p100allcount;
+        $row = $result->fetch_object();
+        $dataPointsAll['y']	= intval($row->p100allelapse);
+        $dataPointsAll['label']	= "100";
+        $dataPointsAllvec[0]	= $dataPointsAll;
+        $p100allcount		= $row->p100allcount;
     }
 	
 	
-	/*Percentil 100 200*/
-	$query = "SELECT MAX(elapsed) as p100200elapse, COUNT(*) as p100200count FROM $testlogtable WHERE responseCode=\"200\"";
+    /*Percentil 100 200*/
+    $query = "SELECT MAX(elapsed) as p100200elapse, COUNT(*) as p100200count FROM $testlogtable WHERE responseCode=\"200\"";
     $result = mysqli_query($enlace, $query);
 	
     if (!$result) {
         $message  = 'Query invalido: ' . mysql_error() . "\n";
         $message .= 'Query completa: ' . $query;
             
-		$response['code'] 		= "002"; // code 002 error de query
+        $response['code'] 		= "002"; // code 002 error de query
         $response['message'] 	= $message;
-		mysqli_close($enlace);	
+        mysqli_close($enlace);	
         die(json_encode($response));
     }else{
-		$row = $result->fetch_object();
-		$dataPoints200['y'] 	= intval($row->p100200elapse);
-		$dataPoints200['label']	= "100";
-		$dataPoints200vec[0]	= $dataPoints200;
-		$p100200count			= $row->p100200count;
+        $row = $result->fetch_object();
+        $dataPoints200['y'] 	= intval($row->p100200elapse);
+        $dataPoints200['label']	= "100";
+        $dataPoints200vec[0]	= $dataPoints200;
+        $p100200count		= $row->p100200count;
     }
 	
 	

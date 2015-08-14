@@ -9,12 +9,12 @@
 	$response = array('code' => "", 'message' => "");        
         
 	if (isset($_SESSION['execution'])){
-		$testname =	$_SESSION['execution'];
-		$testid	  =	$_SESSION['executionID'];
+            $testname =	$_SESSION['execution'];
+            $testid	  =	$_SESSION['executionID'];
 	}else{
-		$response['message'] = "You need to select a test/execution";
-		$response['code'] = "003";
-		die(json_encode($response));
+            $response['message'] = "You need to select a test/execution";
+            $response['code'] = "003";
+            die(json_encode($response));
 	}
 		
 	ob_start();
@@ -23,36 +23,37 @@
 
 	/* Verify the connection */
 	if (mysqli_connect_errno()) {
-		$message = utf8_encode("Error in the connection: ".mysqli_connect_error());	
-		$response['code'] = "001"; // code 001 error de conexión
-		$response['message'] = $message; 
-		die(json_encode($response));
+            $message = utf8_encode("Error in the connection: ".mysqli_connect_error());	
+            $response['code'] = "001"; // code 001 error de conexión
+            $response['message'] = $message; 
+            die(json_encode($response));
 	}
  
 	/* Escapeo las variables */ 
 	$testlogtable	= mysqli_real_escape_string($enlace, "testlog".$testid);
-	$desde 			= mysqli_real_escape_string($enlace, $desde);
-	$hasta 			= mysqli_real_escape_string($enlace, $hasta);
-	$request 		= mysqli_real_escape_string($enlace, $request);
+	$desde 		= mysqli_real_escape_string($enlace, $desde);
+	$hasta 		= mysqli_real_escape_string($enlace, $hasta);
+	$request 	= mysqli_real_escape_string($enlace, $request);
  
 	$query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" AND responseCode=\"200\" GROUP BY label, HOUR(Date), MINUTE(Date) ORDER BY Date";
  
         $result = mysqli_query($enlace, $query);
-	
-//echo $query;
 	
     if (!$result) {
         $message  = 'Invalid query Timeline: ' . mysql_error() . "\n";
         $message .= 'Full query: ' . $query;
         $response['code'] 		= "002"; // code 002 error de query
         $response['message'] 	= $message;  
-		mysqli_close($enlace);		
+        mysqli_close($enlace);		
         die(json_encode($response));
 		
     }else{
 		
         $gTitle['text'] 	= $request;
         $gTitle['fontSize'] 	= 20;
+        $gLegend['fontFamily']  = "Helvetica";
+        $gLegend['cursor']      = "pointer";
+        $gLegend['itemclick']   = '';
         $gToolTip['shared']	= true;
         $gToolTip['enabled']	= true;
         $gAxisX['title']	= "Time";
@@ -71,7 +72,7 @@
         $dataPointsTPS 		= array();
 
         $textElapse = "";
-        $textTPS 	= "";
+        $textTPS    = "";
 		
         while($row = $result->fetch_object()){
             $time=explode(" ",$row->Date);
@@ -100,6 +101,7 @@
         $gdata[1]	=	$dataLine2;
 
         $message['title'] 	= $gTitle;
+        $message['legend'] 	= $gLegend;
         $message['zoomEnabled'] = true;
         $message['exportFileName'] = "Response time over time";
         $message['exportEnabled'] = true;

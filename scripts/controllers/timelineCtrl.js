@@ -54,7 +54,7 @@ angular.module('JMeteranalyzer')
                                     dataGraph.data[i].dataPoints[j].x=d;
                             }
                     }
-
+                    dataGraph.legend.itemclick = function (e) {if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;} else {e.dataSeries.visible = true;}e.chart.render();};
                     var chart = new CanvasJS.Chart("chartContainer",dataGraph);
                     chart.render();
                     $log.log("Successful timeline query");

@@ -15,21 +15,51 @@ angular.module('JMeteranalyzer')
 		$scope.location.locURL = $location.path();
     }
 	
-	$scope.location = navlocation;
-	
-	$scope.modalmanager = function(mtitle, mmessage){
-		$scope.modaltitle = mtitle;
-		$scope.modalmessage = mmessage;
-		$('#myModal').modal('show');
-	}
-	
+    $scope.location = navlocation;
+
+    $scope.modalmanager = function(mtitle, mmessage){
+        $scope.modaltitle = mtitle;
+        $scope.modalmessage = mmessage;
+        $('#myModal').modal('show');
+    }
+
+    $scope.timezone = function(){
+        var tzdate = new Date();
+        var tz = tzdate.getTimezoneOffset();
+        var timeg = Math.abs((-1)*(tz/60)*100);
+        if (timeg <= 0){
+            var timet = "+";
+        }else{
+            var timet = "-";
+        }
+        timeg = Math.abs(timeg);
+        tz  = "0000" + timeg.toString();
+        return (timet + tz.substr(tz.length-4));
+    }
+
     $scope.startview = function(){ 
         services.generalinfo()
         .then(function(res){
             // success
             switch(res.code) {
                 case "000":
-                    $scope.info=res.message;
+                    $scope.info = res.message;
+                    $scope.dataGTLG = res.message.gtlgraph;
+                    $scope.dataRCG = res.message.rcgraph;
+                    var i ,j, d, tz;
+                    tz = $scope.timezone();
+                    for (i in  $scope.dataGTLG.data) {
+                            for (j in  $scope.dataGTLG.data[i].dataPoints) {
+                                    d=new Date( $scope.dataGTLG.data[i].dataPoints[j].x + tz);
+                                     $scope.dataGTLG.data[i].dataPoints[j].x=d;
+                            }
+                    }
+                    $scope.dataGTLG.legend.itemclick = function (e) {if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;} else {e.dataSeries.visible = true;}e.chart.render();};
+                    var chartGTLG = new CanvasJS.Chart("chartContainerGTLG",  $scope.dataGTLG);
+                    chartGTLG.render();
+                    var chartRC = new CanvasJS.Chart("chartContainerRC",  $scope.dataRCG);
+                    chartRC.render();
+                    
                     $log.log("Successful general info query");
                     break;
                 case "001":

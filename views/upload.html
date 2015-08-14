@@ -33,7 +33,7 @@
 					<span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
 				</td>
 				<td nowrap>
-					<button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+					<button type="button" class="btn btn-success btn-xs" ng-click="item.upload(); item.isProcessing = true" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
 						<span class="glyphicon glyphicon-upload"></span> Upload
 					</button>
 					<button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading">
@@ -43,7 +43,7 @@
 						<span class="glyphicon glyphicon-trash"></span> Remove
 					</button>
 					<span ng-show="item.isSuccess">
-						<button type="button" class="btn btn-xs"  ng-click="process(item.file.name, item.servername, multifile)">
+						<button type="button" class="btn btn-xs"  ng-click="process(item.file.name, item.servername, multifile); item.isProcessing = false" ng-disabled="!item.isProcessing">
 							<span class="glyphicon glyphicon-save"></span> Process
 						</button>
 						<input type="text" placeholder="server name" ng-model="item.servername">

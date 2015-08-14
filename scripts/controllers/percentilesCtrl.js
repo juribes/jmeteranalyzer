@@ -31,6 +31,7 @@ angular.module('JMeteranalyzer')
             switch(res.code) {
                 case "000":
                     $scope.dataGraph = res.message;
+                    $scope.dataGraph.legend.itemclick = function (e) {if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {e.dataSeries.visible = false;} else {e.dataSeries.visible = true;}e.chart.render();};
                     var chart = new CanvasJS.Chart("chartContainer", $scope.dataGraph);
                     chart.render();
                     $log.log("Successful get percentiles");
