@@ -45,6 +45,13 @@ $db_database    =   "<database>";
 ```
 The user should have full rights on the specific database. 
 
+# Installation
+
+To install the database, you only need to request in you browser this URL:
+```
+http://<your server>/jmeteranalyzer/services/install.php
+```
+e.g http://localhost/jmeteranalyzer/services/install.php  (if you have the application in your PC)
 
 # JMeter Configuration
 
