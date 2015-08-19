@@ -8,7 +8,7 @@ This application has been developed by a senior Performance tester to analyze th
 
 This application has been developed as a SPA (Single Page Application) with HTML5, Bootstrap, AngularJS, PHP and a MySQL database. It requires a PHP server and a MySQL database, a XAMPP server is perfect for it.
 
-The application will generate Charts, Tables and Statistics for all the test and for each request/label, it also allows to the Average, Maximum and Minimum response time in specific range of time of a test.
+The application will generate Charts, Tables and Statistics for all the test and for each request/label, it also allows you to get the Average, Maximum and Minimum response time in specific range of time of a test.
 
 
 # Server Configuration
@@ -41,9 +41,9 @@ In the file: \jmeteranalyzer\services\configuracion.php you should configure you
 $db_host        =   "<db_server>";
 $db_user        =   "<user>";
 $db_password    =   "<password>";
-$db_database    =   "<database>";
+$db_database    =   "db_jmeteranalizer";
 ```
-The user should have full rights on the specific database. 
+The user should have full rights on the database. 
 
 # Installation
 
