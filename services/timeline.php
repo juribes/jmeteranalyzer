@@ -35,8 +35,13 @@
 	$hasta 		= mysqli_real_escape_string($enlace, $hasta);
 	$request 	= mysqli_real_escape_string($enlace, $request);
  
-	$query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" AND responseCode=\"200\" GROUP BY label, HOUR(Date), MINUTE(Date) ORDER BY Date";
- 
+        
+        if ($_SESSION['multifile']){
+            $query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" AND responseCode=\"200\" GROUP BY label, HOUR(Date), MINUTE(Date) ORDER BY Date";
+        }else{
+            $query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS, AVG(allthreads) as VU FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" AND responseCode=\"200\" GROUP BY label, HOUR(Date), MINUTE(Date) ORDER BY Date";
+        }
+    
         $result = mysqli_query($enlace, $query);
 	
     if (!$result) {
@@ -64,52 +69,90 @@
         $gAxisY['titleFontSize']= 20;
         $gAxisY['labelFontSize']= 15;
         $gAxisY2['includeZero']	= false;
-        $gAxisY2['title']	= "TPS (Req/min)";
+        $gAxisY2['title']	= "TPM (Req/min) & VU";
         $gAxisY2['titleFontSize']= 20;
         $gAxisY2['labelFontSize']= 15;
 
-        $dataPointsElapse 	= array();
-        $dataPointsTPS 		= array();
+        if ($_SESSION['multifile']){
+            $dataPointsElapse 	= array();
+            $dataPointsTPS 	= array();
 
-        $textElapse = "";
-        $textTPS    = "";
-		
-        while($row = $result->fetch_object()){
-            $time=explode(" ",$row->Date);
-            $dataElapse["x"]	= $time[0]."T". $time[1];
-            $dataElapse["y"]	= round($row->AVG,2);
-            $dataTPS["x"] 	= $time[0]."T". $time[1];
-            $dataTPS["y"] 	= intval($row->TPS);	
-            $textElapse[] 	= $dataElapse;
-            $textTPS[] 		= $dataTPS;
+            $textElapse = "";
+            $textTPS    = "";
+
+            while($row = $result->fetch_object()){
+                $time=explode(" ",$row->Date);
+                $dataElapse["x"]	= $time[0]."T". $time[1];
+                $dataElapse["y"]	= round($row->AVG,2);
+                $dataTPS["x"] 	        = $time[0]."T". $time[1];
+                $dataTPS["y"] 	        = intval($row->TPS);	
+                $textElapse[] 	        = $dataElapse;
+                $textTPS[] 		= $dataTPS;
+            }
+        }else{
+            $dataPointsElapse 	= array();
+            $dataPointsTPS 	= array();
+            $dataPointsVU       = array();
+
+            $textElapse = "";
+            $textTPS    = "";
+            $textVU     = "";
+
+            while($row = $result->fetch_object()){
+                $time=explode(" ",$row->Date);
+                $dataElapse["x"]   = $time[0]."T". $time[1];
+                $dataElapse["y"]   = round($row->AVG,2);
+                $dataTPS["x"] 	   = $time[0]."T". $time[1];
+                $dataTPS["y"] 	   = intval($row->TPS);
+                $dataPointsVU["x"] = $time[0]."T". $time[1];
+                $dataPointsVU["y"] = round($row->VU,0);
+                $textElapse[] 	   = $dataElapse;
+                $textTPS[] 	   = $dataTPS;
+                $textVU[]          = $dataPointsVU;
+            }
         }
-	
+        
         $dataLine1['type'] 		= "line";
-        $dataLine1['legendText'] 	= $request." RT AVG"; //Legend name
-        $dataLine1['name'] 		= "RT AVG"; //tool tip name
+        $dataLine1['color']             = "#369EAD";
+        $dataLine1['legendText'] 	= $request.": AVG RT"; //Legend name
+        $dataLine1['name'] 		= "AVG RT"; //tool tip name
         $dataLine1['showInLegend'] 	= true;
         $dataLine1['dataPoints'] 	= $textElapse;
 
         $dataLine2['type'] 		= "line";
-        $dataLine2['legendText'] 	= $request." TPS"; //Legend name
-        $dataLine2['name'] 		= "TPS"; //tool tip name
+        $dataLine2['color']             = "#C24642";
+        $dataLine2['legendText'] 	= $request." TPM"; //Legend name
+        $dataLine2['name'] 		= "TPM"; //tool tip name
         $dataLine2['showInLegend'] 	= true;
         $dataLine2['axisYType'] 	= "secondary";
         $dataLine2['dataPoints']	= $textTPS;
 
-        $gdata[0]	=	$dataLine1;
-        $gdata[1]	=	$dataLine2;
-
-        $message['title'] 	= $gTitle;
-        $message['legend'] 	= $gLegend;
-        $message['zoomEnabled'] = true;
+        if (!$_SESSION['multifile']){
+            $dataLine3['type'] 		= "area";
+            $dataLine3['color']         = "#7F6084";
+            $dataLine3['legendText'] 	= "VU"; //Legend name
+            $dataLine3['name'] 		= "VU"; //tool tip name
+            $dataLine3['showInLegend'] 	= true;
+            $dataLine3['axisYType'] 	= "secondary";
+            $dataLine3['dataPoints']	= $textVU;    
+            $gdata[0]                   = $dataLine3;
+            $gdata[1]	                = $dataLine1;
+            $gdata[2]	                = $dataLine2;
+        }else{
+            $gdata[0]	=	$dataLine1;
+            $gdata[1]	=	$dataLine2;
+        }
+        
+        $message['title']          = $gTitle;
+        $message['legend']         = $gLegend;
+        $message['zoomEnabled']    = true;
         $message['exportFileName'] = "Response time over time";
-        $message['exportEnabled'] = true;
-        $message['toolTip']     = $gToolTip;
-        $message['axisX'] 	= $gAxisX;
-        $message['axisY'] 	= $gAxisY;
-        $message['axisY2'] 	= $gAxisY2;
-        $message['data'] 	= $gdata;
+        $message['exportEnabled']  = true;
+        $message['toolTip']        = $gToolTip;
+        $message['axisX']          = $gAxisX;
+        $message['axisY']          = $gAxisY;
+        $message['axisY2']         = $gAxisY2;
+        $message['data']           = $gdata;
 
         $response['code'] = "000";
         $response['message'] = $message;

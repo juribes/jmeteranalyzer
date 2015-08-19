@@ -116,9 +116,11 @@
     $mensaje["rcgraph"] = $rcgraph;
     
     /* General Timeline Graph */
-    //For UNIFIULE: $query = "SELECT FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS, AVG(allthreads) as VU FROM $testlogtable GROUP BY HOUR(Date), MINUTE(Date) ORDER BY Date";
-  
-    $query = "SELECT FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $testlogtable GROUP BY HOUR(Date), MINUTE(Date) ORDER BY Date";
+    if ($_SESSION['multifile']){
+        $query = "SELECT FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $testlogtable GROUP BY HOUR(Date), MINUTE(Date) ORDER BY Date";
+    }else{
+        $query = "SELECT FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS, AVG(allthreads) as VU FROM $testlogtable GROUP BY HOUR(Date), MINUTE(Date) ORDER BY Date";
+    }
     
     $result = mysqli_query($enlace, $query);
 	
@@ -131,22 +133,44 @@
         die(json_encode($response));
     }else{
         
-        $data = array();
-        $mensajeerror = array();
-        
-        $textElapse = "";
-        $textTPS    = "";
-        
-        while($row = $result->fetch_object()){
-            $time=explode(" ",$row->Date);
-            $dataElapse["x"]	= $time[0]."T". $time[1];
-            $dataElapse["y"]	= round($row->AVG,2);
-            $dataTPS["x"] 	= $time[0]."T". $time[1];
-            $dataTPS["y"] 	= intval($row->TPS);	
-            $textElapse[] 	= $dataElapse;
-            $textTPS[] 		= $dataTPS;		
+        if ($_SESSION['multifile']){
+            $data = array();
+            $mensajeerror = array();
+
+            $textElapse = "";
+            $textTPS    = "";
+
+            while($row = $result->fetch_object()){
+                $time=explode(" ",$row->Date);
+                $dataElapse["x"]	= $time[0]."T". $time[1];
+                $dataElapse["y"]	= round($row->AVG,2);
+                $dataTPS["x"] 	= $time[0]."T". $time[1];
+                $dataTPS["y"] 	= intval($row->TPS);	
+                $textElapse[] 	= $dataElapse;
+                $textTPS[] 		= $dataTPS;		
+            }
+        }else{
+            $dataPointsElapse 	= array();
+            $dataPointsTPS 	= array();
+            $dataPointsVU       = array();
+
+            $textElapse = "";
+            $textTPS    = "";
+            $textVU     = "";
+            
+            while($row = $result->fetch_object()){
+                $time=explode(" ",$row->Date);
+                $dataElapse["x"]   = $time[0]."T". $time[1];
+                $dataElapse["y"]   = round($row->AVG,2);
+                $dataTPS["x"] 	   = $time[0]."T". $time[1];
+                $dataTPS["y"] 	   = intval($row->TPS);
+                $dataPointsVU["x"] = $time[0]."T". $time[1];
+                $dataPointsVU["y"] = round($row->VU,0);
+                $textElapse[] 	   = $dataElapse;
+                $textTPS[] 	   = $dataTPS;
+                $textVU[]          = $dataPointsVU;
+            }            
         }
-        
         $gTitle['text'] 	  = "Globat Timeline";
         $gTitle['fontSize'] 	  = 20;
         $gLegendRT['fontFamily']    = "Helvetica";
@@ -162,19 +186,21 @@
         $gAxisY['titleFontSize']  = 15;
         $gAxisY['labelFontSize']  = 15;
         $gAxisY2['includeZero']	  = false;
-        $gAxisY2['title']	  = "TPS (Req/min)";
+        $gAxisY2['title']	  = "TPM (Req/min)";
         $gAxisY2['titleFontSize'] = 15;
         $gAxisY2['labelFontSize'] = 15;
 
         $dataLine1['type'] 		= "line";
+        $dataLine1['color']             = "#369EAD";
         $dataLine1['legendText'] 	= "RT AVG"; //Legend name
         $dataLine1['name'] 		= "RT AVG"; //tool tip name
         $dataLine1['showInLegend'] 	= true;
         $dataLine1['dataPoints'] 	= $textElapse;
 
         $dataLine2['type'] 		= "line";
-        $dataLine2['legendText'] 	= "TPS"; //Legend name
-        $dataLine2['name'] 		= "TPS"; //tool tip name
+        $dataLine2['color']             = "#C24642";
+        $dataLine2['legendText'] 	= "TPM"; //Legend name
+        $dataLine2['name'] 		= "TPM"; //tool tip name
         $dataLine2['showInLegend'] 	= true;
         $dataLine2['axisYType'] 	= "secondary";
         $dataLine2['dataPoints']	= $textTPS;
@@ -182,6 +208,22 @@
         $gdata[0]	=	$dataLine1;
         $gdata[1]	=	$dataLine2;
 
+        if (!$_SESSION['multifile']){
+            $dataLine3['type'] 		= "area";
+            $dataLine3['color']         = "#7F6084";
+            $dataLine3['legendText'] 	= "VU"; //Legend name
+            $dataLine3['name'] 		= "VU"; //tool tip name
+            $dataLine3['showInLegend'] 	= true;
+            $dataLine3['axisYType'] 	= "secondary";
+            $dataLine3['dataPoints']	= $textVU;    
+            $gdata[0]                   = $dataLine3;
+            $gdata[1]	                = $dataLine1;
+            $gdata[2]	                = $dataLine2;
+        }else{
+            $gdata[0]	=	$dataLine1;
+            $gdata[1]	=	$dataLine2;            
+        }
+        
         $gtlgraph['title'] 	= $gTitle;
         $gtlgraph['legend'] 	= $gLegendRT;
         $gtlgraph['zoomEnabled'] = true;
@@ -192,7 +234,6 @@
         $gtlgraph['axisY'] 	= $gAxisY;
         $gtlgraph['axisY2'] 	= $gAxisY2;
         $gtlgraph['data'] 	= $gdata;
-
     }
     
     $mensaje["gtlgraph"] = $gtlgraph;

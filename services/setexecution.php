@@ -27,7 +27,7 @@
 	/* Escapeo las variables */ 
 	$db_database = mysqli_real_escape_string($enlace, $db_database);
  
-	$query = "SELECT name, starttime, finishtime FROM tbl_tests WHERE id_test=".$testid;
+	$query = "SELECT name, starttime, finishtime, multifile FROM tbl_tests WHERE id_test=".$testid;
 
     $result = mysqli_query($enlace, $query);
 	
@@ -40,7 +40,12 @@
 		$row = $result->fetch_object();
 		$testname = $row->name; 
 		$mensaje["starttime"]   = $row->starttime; 
-		$mensaje["finishtime"]  = $row->finishtime; 
+		$mensaje["finishtime"]  = $row->finishtime;
+                if (0==$row->multifile){
+                    $_SESSION['multifile'] = false;
+                }else{
+                    $_SESSION['multifile'] = true;
+                }
 	}
 		
 	$_SESSION['execution']		= $testname;
@@ -48,6 +53,7 @@
 	
 	$response['code'] = "000";
 	$mensaje['testname'] = $testname;
+        $mensaje['multifile']   = $_SESSION['multifile'];
 
 	$response['message'] = $mensaje;
 	

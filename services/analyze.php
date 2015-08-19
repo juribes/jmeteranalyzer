@@ -6,12 +6,12 @@
 	$geninfo = array();
 	
 	if (isset($_SESSION['execution'])){
-		$testname	=	$_SESSION['execution'];
-		$testid		=	$_SESSION['executionID'];
+            $testname	= $_SESSION['execution'];
+            $testid	= $_SESSION['executionID'];
 	}else{
-		$response['message']    = "You need to select a test/execution";
-		$response['code']       = "003";
-		die(json_encode($response));
+            $response['message']    = "You need to select a test/execution";
+            $response['code']       = "003";
+            die(json_encode($response));
 	}
 	
 	ob_start();
@@ -93,9 +93,9 @@
         $message  = 'Invalid query UPDATE GI: ' . mysql_error() . "\n";
         $message .= 'Full query: ' . $query;
             
-		$response['code'] = "002"; // code 002 error de query
+	$response['code'] = "002"; // code 002 error de query
         $response['message'] = $message;
-		mysqli_close($enlace);		
+	mysqli_close($enlace);		
         die(json_encode($response));
 	}
 	
@@ -426,28 +426,28 @@
         $message  = 'Query invalido: ' . mysql_error() . "\n";
         $message .= 'Query completa: ' . $query;
             
-		$response['code'] 		= "002"; // code 002 error de query
+        $response['code'] 		= "002"; // code 002 error de query
         $response['message'] 	= $message;
-		mysqli_close($enlace);	
+        mysqli_close($enlace);	
         die(json_encode($response));
     }else{
-		$row = $result->fetch_object();
-		$dataPointsAll['y']		= intval($row->p50allelapse);
-		$dataPointsAll['label']	= "50";
-		$dataPointsAllvec[5]	= $dataPointsAll;
+        $row = $result->fetch_object();
+        $dataPointsAll['y']		= intval($row->p50allelapse);
+        $dataPointsAll['label']	= "50";
+        $dataPointsAllvec[5]	= $dataPointsAll;
     }
 	
-	/*Percentil 50 200*/
-	$query = "SELECT elapsed as p50allelapse FROM $testlogtable WHERE responseCode=\"200\" ORDER BY elapsed ASC limit $percent200,1";
+    /*Percentil 50 200*/
+    $query = "SELECT elapsed as p50allelapse FROM $testlogtable WHERE responseCode=\"200\" ORDER BY elapsed ASC limit $percent200,1";
     $result = mysqli_query($enlace, $query);
 	
     if (!$result) {
         $message  = 'Query invalido: ' . mysql_error() . "\n";
         $message .= 'Query completa: ' . $query;
             
-		$response['code'] 		= "002"; // code 002 error de query
+	$response['code'] 		= "002"; // code 002 error de query
         $response['message'] 	= $message;
-		mysqli_close($enlace);	
+	mysqli_close($enlace);	
         die(json_encode($response));
     }else{
 		$row = $result->fetch_object();
@@ -466,9 +466,9 @@
         $message  = 'Invalid query DELETE response codes: ' . mysql_error() . "\n";
         $message .= 'Full query: ' . $query;
             
-		$response['code'] = "002"; // code 002 error de query
+	$response['code'] = "002"; // code 002 error de query
         $response['message'] = $message;
-		mysqli_close($enlace);		
+	mysqli_close($enlace);		
         die(json_encode($response));
     }	
 	
@@ -491,10 +491,34 @@
 		mysqli_close($enlace);		
 		die(json_encode($response));
 	}
+
+        /* GET if is multifile o unifile*/
+        $query = 'SELECT multifile FROM tbl_tests WHERE id_test='.$testid;
+        
+   	$result = mysqli_query($enlace, $query);
 	
-	$mensaje['message'] = "Test analyzed successfully";
-	$mensaje['starttime'] = $geninfo['starttime'];
-	$mensaje['finishtime'] = $geninfo['finishtime'];
+	if (!$result) {
+		$message  = 'Invalid query response codes: ' . mysql_error() . "\n";
+		$message .= 'Full query: ' . $query;
+			
+		$response['code'] = "002"; // code 002 error de query
+		$response['message'] = $message;
+		mysqli_close($enlace);		
+		die(json_encode($response));
+        }else{
+            $row = $result->fetch_object();
+            if (0==$row->multifile){
+                $_SESSION['multifile'] = false;
+            }else{
+                $_SESSION['multifile'] = true;
+            }
+        }
+        
+        
+	$mensaje['message']     = "Test analyzed successfully";
+	$mensaje['starttime']   = $geninfo['starttime'];
+	$mensaje['finishtime']  = $geninfo['finishtime'];
+        $mensaje['multifile']   = $_SESSION['multifile'];
 	
 	$response['code'] = "000";
 	$response['message'] = $mensaje;

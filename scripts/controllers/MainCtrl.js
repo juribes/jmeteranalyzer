@@ -82,6 +82,7 @@ angular.module('JMeteranalyzer')
                                 $scope.test.testname = res.message.testname;
                                 $scope.formcontent.InitialTime = res.message.starttime;
                                 $scope.formcontent.FinalTime = res.message.finishtime;
+                                $scope.formcontent.multifile = res.message.multifile;
                                 $log.log("Successful: set execution");
                                 $scope.showAnalize = true;
                                 break;
@@ -170,7 +171,8 @@ angular.module('JMeteranalyzer')
                     $scope.respuesta = res.message.message;
                     $scope.formcontent.InitialTime = res.message.starttime;
                     $scope.formcontent.FinalTime = res.message.finishtime;
-                    $log.log("Test analized uccessfully");
+                    $scope.formcontent.multifile = res.message.multifile;
+                    $log.log("Test analized successfully");
                     $scope.modalmanager("Info", $scope.respuesta);
                     $scope.showAnalize	=	false;
                     break;
