@@ -19,14 +19,14 @@
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-DROP SCHEMA IF EXISTS `db_jmeteranalizer` ;
+DROP SCHEMA IF EXISTS `db_jmeteranalyzer` ;
 
-CREATE SCHEMA IF NOT EXISTS `db_jmeteranalizer` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
-USE `db_jmeteranalizer` ;
+CREATE SCHEMA IF NOT EXISTS `db_jmeteranalyzer` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
+USE `db_jmeteranalyzer` ;
 
-DROP TABLE IF EXISTS `db_jmeteranalizer`.`tbl_tests` ;
+DROP TABLE IF EXISTS `db_jmeteranalyzer`.`tbl_tests` ;
 
-CREATE TABLE IF NOT EXISTS `db_jmeteranalizer`.`tbl_tests` (
+CREATE TABLE IF NOT EXISTS `db_jmeteranalyzer`.`tbl_tests` (
   `id_test` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `name` VARCHAR(45) NOT NULL COMMENT '',
   `starttime` DATETIME NOT NULL COMMENT '',
@@ -45,9 +45,9 @@ CREATE TABLE IF NOT EXISTS `db_jmeteranalizer`.`tbl_tests` (
   UNIQUE INDEX `idtbl_tests_UNIQUE` (`id_test` ASC)  COMMENT '')
 ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `db_jmeteranalizer`.`tbl_responsecodes` ;
+DROP TABLE IF EXISTS `db_jmeteranalyzer`.`tbl_responsecodes` ;
 
-CREATE TABLE IF NOT EXISTS `db_jmeteranalizer`.`tbl_responsecodes` (
+CREATE TABLE IF NOT EXISTS `db_jmeteranalyzer`.`tbl_responsecodes` (
   `tbl_tests_id_test` INT NOT NULL COMMENT '',
   `id_responsecodes` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `respcodecode` VARCHAR(50) NULL COMMENT '',
@@ -57,14 +57,14 @@ CREATE TABLE IF NOT EXISTS `db_jmeteranalizer`.`tbl_responsecodes` (
   PRIMARY KEY (`id_responsecodes`)  COMMENT '',
   CONSTRAINT `fk_tbl_responsecodes_tbl_tests1`
     FOREIGN KEY (`tbl_tests_id_test`)
-    REFERENCES `db_jmeteranalizer`.`tbl_tests` (`id_test`)
+    REFERENCES `db_jmeteranalyzer`.`tbl_tests` (`id_test`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `db_jmeteranalizer`.`tbl_percentiles` ;
+DROP TABLE IF EXISTS `db_jmeteranalyzer`.`tbl_percentiles` ;
 
-CREATE TABLE IF NOT EXISTS `db_jmeteranalizer`.`tbl_percentiles` (
+CREATE TABLE IF NOT EXISTS `db_jmeteranalyzer`.`tbl_percentiles` (
   `tbl_tests_id_test` INT NOT NULL COMMENT '',
   `id_percentiles` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `label` VARCHAR(345) NOT NULL COMMENT '',
@@ -75,14 +75,14 @@ CREATE TABLE IF NOT EXISTS `db_jmeteranalizer`.`tbl_percentiles` (
   PRIMARY KEY (`id_percentiles`)  COMMENT '',
   CONSTRAINT `fk_tbl_percentiles_tbl_tests`
     FOREIGN KEY (`tbl_tests_id_test`)
-    REFERENCES `db_jmeteranalizer`.`tbl_tests` (`id_test`)
+    REFERENCES `db_jmeteranalyzer`.`tbl_tests` (`id_test`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `db_jmeteranalizer`.`tbl_files` ;
+DROP TABLE IF EXISTS `db_jmeteranalyzer`.`tbl_files` ;
 
-CREATE TABLE IF NOT EXISTS `db_jmeteranalizer`.`tbl_files` (
+CREATE TABLE IF NOT EXISTS `db_jmeteranalyzer`.`tbl_files` (
   `tbl_tests_id_test` INT NOT NULL COMMENT '',
   `id_files` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `name` VARCHAR(45) NOT NULL COMMENT '',
@@ -91,14 +91,14 @@ CREATE TABLE IF NOT EXISTS `db_jmeteranalizer`.`tbl_files` (
   INDEX `tbl_tests_id_test` (`tbl_tests_id_test` ASC)  COMMENT '',
   CONSTRAINT `fk_tbl_files_tbl_tests1`
     FOREIGN KEY (`tbl_tests_id_test`)
-    REFERENCES `db_jmeteranalizer`.`tbl_tests` (`id_test`)
+    REFERENCES `db_jmeteranalyzer`.`tbl_tests` (`id_test`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `db_jmeteranalizer`.`tbl_labels` ;
+DROP TABLE IF EXISTS `db_jmeteranalyzer`.`tbl_labels` ;
 
-CREATE TABLE IF NOT EXISTS `db_jmeteranalizer`.`tbl_labels` (
+CREATE TABLE IF NOT EXISTS `db_jmeteranalyzer`.`tbl_labels` (
   `tbl_tests_id_test` INT NOT NULL COMMENT '',
   `id_labels` INT NOT NULL AUTO_INCREMENT COMMENT '',
   `label` VARCHAR(345) NULL COMMENT '',
@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `db_jmeteranalizer`.`tbl_labels` (
   PRIMARY KEY (`id_labels`)  COMMENT '',
   CONSTRAINT `fk_tbl_labels_tbl_tests1`
     FOREIGN KEY (`tbl_tests_id_test`)
-    REFERENCES `db_jmeteranalizer`.`tbl_tests` (`id_test`)
+    REFERENCES `db_jmeteranalyzer`.`tbl_tests` (`id_test`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

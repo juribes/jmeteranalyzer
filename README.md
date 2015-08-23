@@ -16,7 +16,7 @@ The application will generate Charts, Tables and Statistics for all the test and
 It is recommended but not mandatory do these configurations in PHP and MySQL
 
 ### PHP
-File: xampp\php\php.ini (in a XAMPP server)
+File: xampp\php\php.ini (in a XAMPP server) or /opt/lampp/etc/php.ini (in a LAMP server)
 ```
 max_execution_time = 1200 
 max_input_time = 360 
@@ -26,7 +26,7 @@ default_socket_timeout = 360
 ```
 
 ### MySQL
-File: xampp\mysql\bin\my.ini (in a XAMPP server)
+File: xampp\mysql\bin\my.ini (in a XAMPP server) or /opt/lampp/etc/my.cnf (in a LAMP server)
 ```
 max_allowed_packet = 100M
 ```
@@ -41,7 +41,7 @@ In the file: \jmeteranalyzer\services\configuracion.php you should configure you
 $db_host        =   "<db_server>";
 $db_user        =   "<user>";
 $db_password    =   "<password>";
-$db_database    =   "db_jmeteranalizer";
+$db_database    =   "db_jmeteranalyzer";
 ```
 The user should have full rights on the database. 
 
@@ -52,6 +52,8 @@ To install the database, you only need to request in you browser this URL:
 http://<your server>/jmeteranalyzer/services/install.php
 ```
 e.g http://localhost/jmeteranalyzer/services/install.php  (if you have the application in your PC)
+
+NOTE: It is probably that in linux you have to give rights to write in the folder /jmeteranalyzer/services/uploads
 
 # JMeter Configuration
 

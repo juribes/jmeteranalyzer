@@ -22,7 +22,7 @@ angular
     $routeProvider
 	    .when('/', {
           templateUrl: 'views/main.html',
-          controller: 'MainCtrl'
+          controller: 'mainCtrl'
         })
 		.when('/upload', {
           templateUrl: 'views/upload.html',
@@ -33,7 +33,7 @@ angular
           controller: 'summaryCtrl'
         })
         .when('/timelineData', {
-          templateUrl: 'views/timelineData.html',
+          templateUrl: 'views/timelinedata.html',
           controller: 'timelineDataCtrl'
         })
         .when('/timeline', {

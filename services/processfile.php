@@ -17,7 +17,7 @@
 		die(json_encode($response));
 	}
 	
-	$MyLog = fopen(".\\Uploads\\".$filename, "r");
+	$MyLog = fopen(".".DIRECTORY_SEPARATOR."uploads".DIRECTORY_SEPARATOR.$filename, "r");
 	
 	ob_start();
 	$enlace = mysqli_connect($db_host, $db_user, $db_password, $db_database);

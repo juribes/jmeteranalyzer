@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name JMeteranalyzer.controller:MainCtrl
+ * @name JMeteranalyzer.controller:mainCtrl
  * @description
- * # MainCtrl
+ * # mainCtrl
  * Controller of the JMeteranalyzer
  */
 angular.module('JMeteranalyzer')
-  .controller('MainCtrl', [ '$scope', '$location', '$log', 'services', 'interData', 'navlocation', 'testid', function ($scope, $location, $log, services, interData, navlocation, testid){
+  .controller('mainCtrl', [ '$scope', '$location', '$log', 'services', 'interData', 'navlocation', 'testid', function ($scope, $location, $log, services, interData, navlocation, testid){
 
     $scope.init = function(){
         $scope.startview();

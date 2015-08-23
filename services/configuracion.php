@@ -5,7 +5,7 @@
     $db_host		=	"localhost";
     $db_user		=	"juribe";
     $db_password	=	'nombre y otorgar';
-    $db_database	=	"db_jmeteranalizer";
+    $db_database	=	"db_jmeteranalyzer";
     
     session_start();
 	
