@@ -38,6 +38,7 @@ angular.module('JMeteranalyzer')
     }
 
     $scope.startview = function(){ 
+		//$('#ModalLoading').modal('show');
         services.generalinfo()
         .then(function(res){
             // success
@@ -80,9 +81,11 @@ angular.module('JMeteranalyzer')
                 default:
                     $log.log("Unknown error. Message:" + res.message);
                     $scope.modalmanager("Error", "Unknown error, check the log to see more information");
-            }   
+            }
+			//$('#ModalLoading').modal('hide');
         }, function(err){
             // error
+			//$('#ModalLoading').modal('hide');
             $log.log("Error in the promise");
             $scope.modalmanager("Error", "Error in the promise");
         })

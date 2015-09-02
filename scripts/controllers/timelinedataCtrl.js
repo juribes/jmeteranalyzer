@@ -25,7 +25,8 @@ angular.module('JMeteranalyzer')
 		$('#myModal').modal('show');
 	}
 	
-    $scope.timelinetable = function(){ 
+    $scope.timelinetable = function(){
+		$('#ModalLoading').modal('show');
         services.timelinedata($scope.formcontent.InitialTime, $scope.formcontent.FinalTime, $scope.formcontent.req)
         .then(function(res){
             // success
@@ -54,9 +55,10 @@ angular.module('JMeteranalyzer')
                     $log.log("Unknown error. Message:" + res.message);
                     $scope.modalmanager("Error", "Unknown error, check the log to see more information");
             }   
-            
+            $('#ModalLoading').modal('hide');
         }, function(err){
             // error
+			$('#ModalLoading').modal('hide');
             $log.log("Error in the promise");
 			$scope.modalmanager("Error", "Error in the promise");
         })

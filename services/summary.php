@@ -40,7 +40,7 @@
 // 	$query = "SELECT label, count(*) as Samples, AVG(`elapsed`) as AVG, MAX(`elapsed`) as MAX, MIN(`elapsed`) as MIN, STD(`elapsed`) as StdDev FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") AND responseCode=\"200\" GROUP BY label ORDER BY label";
 
 // HTTP all
-	$query = "SELECT label, count(*) as Samples, AVG(`elapsed`) as AVG, MAX(`elapsed`) as MAX, MIN(`elapsed`) as MIN, STD(`elapsed`) as StdDev FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") GROUP BY label ORDER BY label";
+	$query = "SELECT label, count(*) as Samples, AVG(`elapsed`) as AVG, MAX(`elapsed`) as MAX, MIN(`elapsed`) as MIN, STD(`elapsed`) as StdDev, SUM(case when success = 0 then 1 else 0 end ) as numerror  FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") GROUP BY label ORDER BY label";
  
     $result = mysqli_query($enlace, $query);
 	
@@ -65,6 +65,8 @@
             $data["MAX"]      	= $row->MAX; 			
             $data["MIN"]      	= $row->MIN; 			
             $data["StdDev"]     = round($row->StdDev,2); 
+			$data["numerror"]   = $row->numerror; 
+			$data["perror"]     = round(100*$row->numerror/$row->Samples,2); 			
 			
             $mensaje[]=$data;
         }
@@ -76,5 +78,3 @@
 		mysqli_close($enlace);
 
     }
-
-

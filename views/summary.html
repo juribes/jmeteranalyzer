@@ -26,6 +26,7 @@
 							<th ng-click="sort('MAX')"><span ng-class="iconx.MAX" aria-hidden="true"></span>MAX</th>
 							<th ng-click="sort('MIN')"><span ng-class="iconx.MIN" aria-hidden="true"></span>MIN</th>
 							<th ng-click="sort('StdDev')"><span ng-class="iconx.StdDev" aria-hidden="true"></span>Std.Dev.</th>
+							<th ng-click="sort('StdDev')">% Error</th>
 						</tr>
 					</thead>
 
@@ -37,6 +38,7 @@
 							<td>{{data.MAX}}</td>
 							<td>{{data.MIN}}</td>
 							<td>{{data.StdDev}}</td>
+							<td>{{data.perror}}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -44,6 +46,7 @@
 		</div>
     </div>
 	<!-- Modal stuff -->
+	<!-- Modal Error/Info -->
 	<div class="modal fade" id="myModal" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -58,6 +61,15 @@
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
+		</div>
+	</div>
+	
+	<!-- Modal Loading -->
+	<div class="modal fade" id="ModalLoading" role="dialog">
+		<div class="modal-dialog">
+			<!--<div class="modal-content text-center">-->
+				<img src="images/loading.gif">
+			<!--</div>-->
 		</div>
 	</div>
 	<!-- Modal stuff -->
