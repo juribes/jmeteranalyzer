@@ -36,9 +36,9 @@
     $request 		= mysqli_real_escape_string($enlace, $request);
 
     if ($_SESSION['multifile']){
-        $query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" AND responseCode=\"200\" GROUP BY label, HOUR(Date), MINUTE(Date), SECOND(Date) ORDER BY Date";
+        $query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, elapsed as AVG, responsecode FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" ORDER BY Date";
     }else{
-        $query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS, AVG(allthreads) as VU FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" AND responseCode=\"200\" GROUP BY label, HOUR(Date), MINUTE(Date), SECOND(Date) ORDER BY Date";
+        $query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, elapsed as AVG, responsecode, allthreads as VU FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" ORDER BY Date";
     }
     $result = mysqli_query($enlace, $query);
 
@@ -60,20 +60,20 @@
         
         if ($_SESSION['multifile']){
             while($row = $result->fetch_object()){
-                $data["label"] 	= $row->label;
-                $data["time"]	= $row->Date;
-                $data["AVG"]	= round($row->AVG,2);
-                $data["TPS"] 	= intval($row->TPS);
+                $data["label"] 			= $row->label;
+                $data["time"]			= $row->Date;
+                $data["AVG"]			= round($row->AVG,2);
+                $data["responsecode"] 	= $row->responsecode;
 
                 $mensaje[]=$data;
             }
         }else{
             while($row = $result->fetch_object()){
-                $data["label"] 	= $row->label;
-                $data["time"]	= $row->Date;
-                $data["AVG"]	= round($row->AVG,2);
-                $data["TPS"] 	= intval($row->TPS);
-                $data["VU"] 	= round($row->VU,0);
+                $data["label"] 			= $row->label;
+                $data["time"]			= $row->Date;
+                $data["AVG"]			= round($row->AVG,2);
+                $data["responsecode"] 	= $row->responsecode;
+                $data["VU"] 			= round($row->VU,0);
 
                 $mensaje[]=$data;
             }

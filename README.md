@@ -43,7 +43,7 @@ $db_user        =   "<user>";
 $db_password    =   "<password>";
 $db_database    =   "db_jmeteranalyzer";
 ```
-The user should have full rights on the database. 
+The user should have full rights on the specific database. 
 
 # Installation
 
@@ -54,6 +54,7 @@ http://<your server>/jmeteranalyzer/services/install.php
 e.g http://localhost/jmeteranalyzer/services/install.php  (if you have the application in your PC)
 
 NOTE: It is probably that in linux you have to give rights to write in the folder /jmeteranalyzer/services/uploads
+
 
 # JMeter Configuration
 

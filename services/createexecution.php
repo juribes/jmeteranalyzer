@@ -82,10 +82,10 @@ ENGINE = InnoDB;";
     $result = mysqli_query($enlace, $query);
 
     if (mysqli_query($enlace, $query)) {
-        $response['code'] 	 = "000";
-        $response['message'] 	 = $testname;
-        $_SESSION['execution']	 = $testname;
-        $_SESSION['executionID'] = $testid;
+        $response['code'] 			= "000";
+        $response['message'] 		= "Test created successfully.";
+        $_SESSION['execution']		= $testname;
+        $_SESSION['executionID']	= $testid;
     } else {
         $response['code'] = "002";
         $response['message'] = "Error in the query CREATE: ".mysqli_error($enlace)."<br>".$query;

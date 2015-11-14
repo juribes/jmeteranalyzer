@@ -117,9 +117,9 @@
     
     /* General Timeline Graph */
     if ($_SESSION['multifile']){
-        $query = "SELECT FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $testlogtable GROUP BY HOUR(Date), MINUTE(Date) ORDER BY Date";
+        $query = "SELECT FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $testlogtable GROUP BY HOUR(Date), MINUTE(Date), SECOND(Date) ORDER BY Date";
     }else{
-        $query = "SELECT FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS, AVG(allthreads) as VU FROM $testlogtable GROUP BY HOUR(Date), MINUTE(Date) ORDER BY Date";
+        $query = "SELECT FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS, AVG(allthreads) as VU FROM $testlogtable GROUP BY HOUR(Date), MINUTE(Date), SECOND(Date) ORDER BY Date";
     }
     
     $result = mysqli_query($enlace, $query);
@@ -183,10 +183,11 @@
         $gAxisX['labelFontSize']  = 15;
         $gAxisY['includeZero']	  = false;
         $gAxisY['title']	  = "Responde time (ms)";
+//		$gAxisY['maximum']	  = 30000; //OJO!!!!!!!!!!!!!!!!!!!!!!!!!
         $gAxisY['titleFontSize']  = 15;
         $gAxisY['labelFontSize']  = 15;
         $gAxisY2['includeZero']	  = false;
-        $gAxisY2['title']	  = "TPM (Req/min)";
+        $gAxisY2['title']	  = "TPS (Req/sec)";
         $gAxisY2['titleFontSize'] = 15;
         $gAxisY2['labelFontSize'] = 15;
 
@@ -199,8 +200,8 @@
 
         $dataLine2['type'] 		= "line";
         $dataLine2['color']             = "#C24642";
-        $dataLine2['legendText'] 	= "TPM"; //Legend name
-        $dataLine2['name'] 		= "TPM"; //tool tip name
+        $dataLine2['legendText'] 	= "TPS"; //Legend name
+        $dataLine2['name'] 		= "TPS"; //tool tip name
         $dataLine2['showInLegend'] 	= true;
         $dataLine2['axisYType'] 	= "secondary";
         $dataLine2['dataPoints']	= $textTPS;

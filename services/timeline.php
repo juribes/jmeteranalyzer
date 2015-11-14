@@ -37,9 +37,9 @@
  
         
         if ($_SESSION['multifile']){
-            $query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" AND responseCode=\"200\" GROUP BY label, HOUR(Date), MINUTE(Date) ORDER BY Date";
+            $query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" GROUP BY label, HOUR(Date), MINUTE(Date), SECOND(Date) ORDER BY Date";
         }else{
-            $query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS, AVG(allthreads) as VU FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" AND responseCode=\"200\" GROUP BY label, HOUR(Date), MINUTE(Date) ORDER BY Date";
+            $query = "SELECT label, FROM_UNIXTIME(jtimestamp div 1000) as Date, AVG(elapsed) as AVG, count(*) as TPS, AVG(allthreads) as VU FROM $testlogtable WHERE (FROM_UNIXTIME(jtimestamp div 1000) BETWEEN \"$desde\" AND \"$hasta\") and label =\"$request\" GROUP BY label, HOUR(Date), MINUTE(Date), SECOND(Date) ORDER BY Date";
         }
     
         $result = mysqli_query($enlace, $query);
@@ -69,7 +69,7 @@
         $gAxisY['titleFontSize']= 20;
         $gAxisY['labelFontSize']= 15;
         $gAxisY2['includeZero']	= false;
-        $gAxisY2['title']	= "TPM (Req/min) & VU";
+        $gAxisY2['title']	= "TPS (Req/sec) & VU";
         $gAxisY2['titleFontSize']= 20;
         $gAxisY2['labelFontSize']= 15;
 
@@ -121,8 +121,8 @@
 
         $dataLine2['type'] 		= "line";
         $dataLine2['color']             = "#C24642";
-        $dataLine2['legendText'] 	= $request." TPM"; //Legend name
-        $dataLine2['name'] 		= "TPM"; //tool tip name
+        $dataLine2['legendText'] 	= $request." TPS"; //Legend name
+        $dataLine2['name'] 		= "TPS"; //tool tip name
         $dataLine2['showInLegend'] 	= true;
         $dataLine2['axisYType'] 	= "secondary";
         $dataLine2['dataPoints']	= $textTPS;

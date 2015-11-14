@@ -24,8 +24,8 @@
 							<th ng-click="sort('label')"><span class="{{iconT}}" aria-hidden="true"></span>Request</th>
 							<th ng-click="sort('Date')"><span class="{{iconM}}" aria-hidden="true"></span>Time</th>
 							<th ng-click="sort('AVG')"><span class="{{iconM}}" aria-hidden="true"></span>AVG</th>
-							<th ng-click="sort('MAX')"><span class="{{iconM}}" aria-hidden="true"></span>TPS</th>
-                                                        <th ng-click="sort('VU')" ng-if="formcontent.multifile == false"><span class="{{iconM}}" aria-hidden="true"></span>VU</th>
+							<th ng-click="sort('respcode')"><span class="{{iconM}}" aria-hidden="true"></span>Response code</th>
+                            <th ng-click="sort('VU')" ng-if="formcontent.multifile == false"><span class="{{iconM}}" aria-hidden="true"></span>VU</th>
                                                         
 						</tr>
 					</thead>
@@ -35,8 +35,8 @@
 							<td style="width: 50%">{{data.label}}</td>
 							<td>{{data.time}}</td>
 							<td>{{data.AVG}}</td>
-							<td>{{data.TPS}}</td>
-                                                        <td ng-if="formcontent.multifile == false">{{data.VU}}</td>
+							<td>{{data.responsecode}}</td>
+                            <td ng-if="formcontent.multifile == false">{{data.VU}}</td>
 						</tr>
 					</tbody>
 				</table>
